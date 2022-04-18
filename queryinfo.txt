@@ -1,0 +1,4 @@
+create table Community_Service(eventName varchar(30), hostName varchar(30), date date, constraint event primary key (eventName, date));
+create table Attend(fName varchar(20), eventName varchar(30), date date, numMembers int, hours double(2,1), constraint fraternityEvent primary key(fName, eventName, date));
+create table Attendance(eventName varchar(30), status boolean, date date, sID char(7), constraint attend primary key (eventName, date, sID));
+create table Dues(sID char(7), term varchar(6), year char(4), owed decimal(13,2), currentDues decimal(13,2), paidOff boolean, constraint due primary key(sID, term, year));
