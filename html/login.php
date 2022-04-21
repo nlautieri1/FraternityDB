@@ -1,12 +1,13 @@
+<!DOCTYPE html>
 <html>
   <head>
     <title> Login Page</title>
-	<link rel="stylesheet" href="login.css">
+	<link rel="stylesheet" href="css/login.css">
   </head>
   <body>
-    <?php
+  <?php
 	session_start();
-     ?>
+  ?>
     <center><h1> Fraternity Login </h1></center>
     <form method="post" action="login.php">
       <div class="container">
@@ -16,15 +17,20 @@
         <input type="password" placeholder="Enter Password" name="password" maxlength="20" required>
 	<button type="submit" value="login" name="login_btn">Login</button>
 	<?php
-		if($connection=@mysqli_connect('localhost', 'mdemchuk1', 'Coors478Ultra', 'FraternityDB')){
-		}
-		$username = $_REQUEST['username'];
-		$password = $_REQUEST['password'];
-		$query = "select * from Account where username='$username' and password='$password'";
 		
-		$r = mysqli_query($connection, $query);
-		if(mysqli_num_rows($r) != 0){
+		if($connection=@mysqli_connect('localhost', 'mdemchuk1', 'Coors478Ultra', 'FraternityDB')){}
+		$username = $_POST['username'];
+		$password = $_POST['password'];
+
+		$result = mysqli_query($connection, "select * from Account where username='$username' and password='$password'");
+		if(mysqli_num_rows($result) != 0){
+			$row = mysqli_fetch_array($result);
+			$_SESSION['fraternity'] = $row[0];
+			header("Location: admin.php");
 			
+		}
+		else{
+			unset($_SESSION);
 		}
 	?>
       </div>
