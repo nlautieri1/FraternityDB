@@ -27,7 +27,14 @@ div.TopNav
 	{
 		width:100%;
 		height:41px;
-		 background-color: blue;
+		background-color: blue;
+	}
+	
+	div.TopNav a.LogoutButton
+	{
+		float: right;
+		font-size: 15px;
+		padding: 16px;
 	}
 	
 	div.FooterContainer
@@ -45,13 +52,6 @@ div.TopNav
 	{
 		text-align: left;
 		font-size: 14px;
-	}
-	
-	div.TopNav a.LoginButton
-	{
-		float: right;
-		font-size: 15px;
-		padding: 16px;
 	}
 		
 	div.InfoContainer
