@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+        <body>
+        <h2> Member Search </h2>
+        <form action="memberResults.php" method="post">
+
+                Search by: <select name="attribute">
+                        <option value="firstName">First Name</option>
+                        <option value="lastName">Last Name</option>
+                        <option value="position">Position</option>
+                        <option value="grade">Grade</option>
+                        <option value="gpa">GPA</option>
+                        <option value="phone">Cell Phone</option>
+                        <option value="email">Email</option>
+                        <option value="major">Major</option>
+                        <option value="sID">Student ID</option>
+                </select>
+
+
+                <input id="search" name="member_input" type="text" placeholder="Type here">
+                <input id="submit" type="submit" value="Search">
+        </form>
+        </body>
+</html>
