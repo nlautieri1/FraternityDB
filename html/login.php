@@ -1,3 +1,6 @@
+<?php
+	session_start();
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -5,9 +8,7 @@
 	<link rel="stylesheet" href="css/login.css">
   </head>
   <body>
-  <?php
-	session_start();
-  ?>
+  
     <center><h1> Fraternity Login </h1></center>
     <form method="post" action="login.php">
       <div class="container">
@@ -25,12 +26,8 @@
 		$result = mysqli_query($connection, "select * from Account where username='$username' and password='$password'");
 		if(mysqli_num_rows($result) != 0){
 			$row = mysqli_fetch_array($result);
-			$_SESSION['fraternity'] = $row[0];
+			$_SESSION['fName'] = $row[0];
 			header("Location: admin.php");
-			
-		}
-		else{
-			unset($_SESSION);
 		}
 	?>
       </div>

@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="css/home.css">    
-<title>Kappa Sigma</title>
+<title>Pi Lambda Phi</title>
     <style>
 	.navbar-red{
 		background:#bf110c;
@@ -27,7 +27,7 @@
         <a class="nav-link" href="home.html">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="alphaSigmaPhi.php">Alpha Sigma Phi</a>
+        <a class="nav-link" href="alphaSigmaPhi.html">Alpha Sigma Phi</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="kappaSigma.php">Kappa Sigma</a>
