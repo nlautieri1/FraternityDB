@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="css/home.css">    
-<title>Salisbury Fraternity Homepage</title>
+<title>Alpha Sigma Phi</title>
     <style>
 	.navbar-red{
 		background:#bf110c;
@@ -27,30 +27,32 @@
         <a class="nav-link" href="home.html">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="alphaSigmaPhi.html">Alpha Sigma Phi</a>
+        <a class="nav-link" href="alphaSigmaPhi.php">Alpha Sigma Phi</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="kappaSigma.html">Kappa Sigma</a>
+        <a class="nav-link" href="kappaSigma.php">Kappa Sigma</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="piLambdaPhi.html">Pi Lambda Phi</a>
+        <a class="nav-link" href="piLambdaPhi.php">Pi Lambda Phi</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="sigmaAlphaEpsilon.html">Sigma Alpha Epsilon</a>
+        <a class="nav-link" href="sigmaAlphaEpsilon.php">Sigma Alpha Epsilon</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="sigmaPhiEpsilon.html">Sigma Phi Epsilon</a>
+        <a class="nav-link" href="sigmaPhiEpsilon.php">Sigma Phi Epsilon</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="sigmaPi.html">Sigma Pi</a>
+        <a class="nav-link" href="sigmaPi.php">Sigma Pi</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="sigmaTauGamma.html">Sigma Tau Gamma</a>
+        <a class="nav-link" href="sigmaTauGamma.php">Sigma Tau Gamma</a>
       </li>
     </ul>
       <a href="login.php"><button class="btn btn-outline-light my-2 my-sm-0" type="submit">Login</button></a>
   </div>
 </nav>
+
+
 
 <div class="FooterContainer">
 	<footer>Location: Guerrieri Student Union 125 | Phone Number: 410-543-6125</footer>
