@@ -151,7 +151,8 @@
 	else if(isset($_POST['update'])){
 		$query = "delete from Member where sID = '$deleteSID'";
 		mysqli_query($connection, $query);
-	}	
+	}
+	  mysqli_close($connection);
 ?>
 
 
