@@ -71,7 +71,7 @@
 
 <form method="post">
 
-                Search by: <select name="attribute">
+                Filter by: <select name="attribute">
                         <option value="eventName">Event Name</option>
                         <option value="date">Date</option>
 			<option value="sID">Student ID</option>
