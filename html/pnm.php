@@ -48,6 +48,10 @@
       <li class="nav-item">
         <a class="nav-link" href="dues.php">Dues</a>
       </li>
+	<li class="nav-item">
+        <a class="nav-link" href="pnm.php">PNM's</a>
+      </li>
+
     </ul>
       <a href="logout.php"><button class="btn btn-outline-light my-2 my-sm-0" type="submit">Logout</button></a>
   </div>

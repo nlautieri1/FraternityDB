@@ -51,7 +51,7 @@
       <a href="login.php"><button class="btn btn-outline-light my-2 my-sm-0" type="submit">Login</button></a>
   </div>
 </nav>
-
+<br>
 <div class="container">
   <div class="row">
     <div class="col">

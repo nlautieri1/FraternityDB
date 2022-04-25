@@ -98,7 +98,7 @@
 			</div>
 			<div class="col-md-4">
 				<label for="recipient-name" class="col-form-label">Student ID:</label>
-            			<input type="text" class="form-control" maxlength="7" name="sID" required>
+            			<input type="text" class="form-control" minlength="7" maxlength="7" name="sID" required>
 			</div>
  		</div>
           </div>
@@ -166,7 +166,7 @@
 		<div class="row md-form mb-5 ">
 			<div class="col-md-4">
 			<label for="recipient-name" class="col-form-label">Student ID:</label>
-            		<input type="text" class="form-control" maxlength="7" name="deleteSID" required>
+            		<input type="text" class="form-control" minlength="7" maxlength="7" name="deleteSID" required>
 			</div>
  		</div>
           </div>
