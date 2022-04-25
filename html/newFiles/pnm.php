@@ -71,7 +71,7 @@ echo "<h1> {$_SESSION['fName']} PNM's</h1>";
 
 <form method="post">
 
-                Search by: <select name="attribute">
+                Filter by: <select name="attribute">
                         <option value="firstName">First Name</option>
                         <option value="lastName">Last Name</option>
                         <option value="phone">Phone</option>
