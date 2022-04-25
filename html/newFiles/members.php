@@ -60,27 +60,7 @@
   <div class="row">
     <div class="col text-center">
 <?php
-			if($_SESSION['fName'] == 'Sigma Pi'){
-				echo "<h1> {$_SESSION['fName']} Members</h1>";
-			}
-			else if($_SESSION['fName'] == 'Alpha Sigma Phi'){
-				echo "<h1> {$_SESSION['fName']} Members</h1>";
-			}
-			else if($_SESSION['fName'] == 'Kappa Sigma'){
-				echo "<h1> {$_SESSION['fName']} Members</h1>";
-			}
-			else if($_SESSION['fName'] == 'Pi Lambda Phi'){
-				echo "<h1> {$_SESSION['fName']} Members</h1>";
-			}
-			else if($_SESSION['fName'] == 'Sigma Alpha Epsilon'){
-				echo "<h1> {$_SESSION['fName']} Members</h1>";
-			}
-			else if($_SESSION['fName'] == 'Sigma Phi Epsilon'){
-				echo "<h1> {$_SESSION['fName']} Members</h1>";
-			}
-			else if($_SESSION['fName'] == 'Sigma Tau Gamma'){
-				echo "<h1> {$_SESSION['fName']} Members</h1>";
-			}
+echo "<h1> {$_SESSION['fName']} Members</h1>";
 ?>
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Insert</button>
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@fat">Delete</button>
