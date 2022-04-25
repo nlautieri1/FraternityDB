@@ -15,7 +15,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="css/home.css">    
-<title>Salisbury Fraternity Homepage</title>
+    <?php
+	echo "<title>{$_SESSION['fName']} Community Service</title>";
+    ?>
     <style>
 	.navbar-red{
 		background:#bf110c;
@@ -48,6 +50,10 @@
       <li class="nav-item">
         <a class="nav-link" href="dues.php">Dues</a>
       </li>
+	<li class="nav-item">
+        <a class="nav-link" href="pnm.php">PNM's</a>
+      </li>
+
     </ul>
       <a href="logout.php"><button class="btn btn-outline-light my-2 my-sm-0" type="submit">Logout</button></a>
   </div>
