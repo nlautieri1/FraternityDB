@@ -142,6 +142,7 @@
 	$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
 	if(isset($_POST['insert'])){
 		$query = "insert into Alumni values ('{$_POST['firstName']}', '{$_POST['lastName']}', '{$_SESSION['fName']}', '{$_POST['email']}')";
+		mysqli_query($connection, $query);
  	}
 	else if(isset($_POST['delete'])){
 		$query = "delete from Alumni where email = '{$_POST['deleteEmail']}'";

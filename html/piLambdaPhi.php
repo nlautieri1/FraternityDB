@@ -27,7 +27,7 @@
         <a class="nav-link" href="home.html">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="alphaSigmaPhi.html">Alpha Sigma Phi</a>
+        <a class="nav-link" href="alphaSigmaPhi.php">Alpha Sigma Phi</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="kappaSigma.php">Kappa Sigma</a>
@@ -51,6 +51,52 @@
       <a href="login.php"><button class="btn btn-outline-light my-2 my-sm-0" type="submit">Login</button></a>
   </div>
 </nav>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <img src="images/piLambdaPhi.jpg">
+    </div>
+    <div class="col">
+      <h1>Pi Lambda Phi</h1>
+    </div>
+    <div class="col">
+	<a href="https://www.pilambdaphi.org/"><button type="button" class="btn btn-primary">National Site</button></a>
+    </div>
+    <div class="col">
+      <a><span>Phone: xxx-xxx-xxxx <br>Email: xxx@gmail.com</span></a>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<h3>Current Members</h3>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+    </tr>
+  </thead>
+  <tbody>
+	<?php
+		$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+		$query = "select firstName, lastName from Member where fName = 'Pi Lambda Phi'";
+		$r=mysqli_query($connection, $query);
+        		while ($row=mysqli_fetch_array($r)) {
+                		echo "<tr>";
+                		echo "<th scope='row'>".$row['firstName']."</th>";
+                		echo "<td>".$row['lastName']."</td>";
+            			echo "</tr>";
+        }
+mysqli_close($connection);
+
+?>
+  </tbody>
+</table>
+
 
 <div class="FooterContainer">
 	<footer>Location: Guerrieri Student Union 125 | Phone Number: 410-543-6125</footer>

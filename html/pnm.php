@@ -55,19 +55,221 @@
 
 
 
-<br>
 <div class="container">
   <div class="row">
     <div class="col text-center">
 <?php
-echo "<h1> {$_SESSION['fName']} PNM's</h1>";
+	echo "<h1> {$_SESSION['fName']} PNM's</h1>";
 ?>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Insert</button>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@fat">Delete</button>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Update</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insert">Insert PNM</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete">Delete PNM</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#update">Update PNM</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertRush">Insert Rush Event</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteRush">Delete Rush Event</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateRush">Update Rush Event</button>
+
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="insert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Insert PNM</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+          <div class="form-group">
+		<div class="row md-form mb-5 ">
+ 			<div class="col-md-4">
+				<label for="recipient-name" class="col-form-label">First Name:</label>
+            			<input type="text" class="form-control" name="firstName" required>
+			</div>
+ 			<div class="col-md-4">
+				<label for="recipient-name" class="col-form-label">Last Name:</label>
+            			<input type="text" class="form-control" name="lastName" required>
+			</div>
+ 			<div class="col-md-4">
+				<label for="recipient-name" class="col-form-label">GPA:</label>
+            			<input type="number" class="form-control" step="0.01" name="gpa" max="4" min="0" required>
+			</div>
+ 		</div>
+          </div>
+          <div class="form-group">
+		<div class="row md-form mb-5 ">
+			<div class="col-md-4">
+				<label for="recipient-name" class="col-form-label">Email:</label>
+            			<input type="email" class="form-control" name="email" required>
+ 			</div>
+ 			<div class="col-md-4">
+				<label for="recipient-name" class="col-form-label">Grade:</label>
+				<br><select name="grade">
+		                        <option value="Freshman">Freshman</option>
+		                        <option value="Sophomore">Sophomore</option>
+		                        <option value="Junior">Junior</option>
+		                        <option value="Senior">Senior</option>
+				</select>
+			</div>
+			<div class="col-md-3">
+				<div class="col-md-4">
+					<label for="recipient-name" class="col-form-label">Phone Number:</label>
+            				<input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+				</div>
+			</div>
+ 		</div>
+          </div>
+          <div class="form-group">
+		<div class="row md-form mb-5 ">
+		</div>
+          </div>
+	<div class="modal-footer">
+        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        	<button type="submit" class="btn btn-primary" name="insert">Insert</button>
+     	 </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Member</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+          <div class="form-group">
+		<label for="recipient-name" class="col-form-label">Email:</label>
+            	<input type="email" class="form-control" name="deleteEmail" required>
+          </div>
+	<div class="modal-footer">
+        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        	<button type="submit" class="btn btn-primary" name="delete">Delete</button>
+     	 </div>
+
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="insertRush" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Insert PNM Rush Event</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+          <div class="form-group">
+		<div class="row md-form mb-5 ">
+ 			<div class="col-md-4">
+				<label for="recipient-name" class="col-form-label">Event Name:</label>
+            			<input type="text" class="form-control" name="eventName" required>
+			</div>
+ 			<div class="col-md-4">
+				<label for="recipient-name" class="col-form-label">Email:</label>
+            			<input type="email" class="form-control" name="emailRush" required>
+ 			</div>
+			<div class="col-md-4">
+				<label for="recipient-name" class="col-form-label">Date:</label><br>
+            			<input type="date" name="date" required>
+			</div>
+ 		</div>
+          </div>
+	<div class="modal-footer">
+        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        	<button type="submit" class="btn btn-primary" name="insertRush">Insert</button>
+     	 </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteRush" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete PNM Rush Event</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+          <div class="form-group">
+		<div class="row md-form mb-5 ">
+ 			<div class="col-md-4">
+				<label for="recipient-name" class="col-form-label">Event Name:</label>
+            			<input type="text" class="form-control" name="deleteEventName" required>
+			</div>
+ 			<div class="col-md-4">
+				<label for="recipient-name" class="col-form-label">Email:</label>
+            			<input type="email" class="form-control" name="deleteEmailRush" required>
+ 			</div>
+			<div class="col-md-4">
+				<label for="recipient-name" class="col-form-label">Date:</label><br>
+            			<input type="date" name="deleteDate" required>
+			</div>
+ 		</div>
+          </div>
+	<div class="modal-footer">
+        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        	<button type="submit" class="btn btn-primary" name="deleteRush">Delete</button>
+     	 </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<?php
+	$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+	if(isset($_POST['insert'])){
+		$query = "insert into PNM values ('{$_POST['firstName']}', '{$_POST['lastName']}', '{$_POST['phone']}', '{$_POST['email']}', '{$_POST['grade']}', {$_POST['gpa']})";
+		mysqli_query($connection, $query);
+	}
+	else if(isset($_POST['delete'])){
+		$query = "delete from PNM where email = '{$_POST['deleteEmail']}'";
+		mysqli_query($connection, $query);
+	}
+	else if(isset($_POST['update'])){
+		mysqli_query($connection, $query);
+	}
+	else if(isset($_POST['insertRush'])){
+		$query = "insert into Rush values ('{$_SESSION['fName']}', '{$_POST['emailRush']}', '{$_POST['eventName']}', '{$_POST['date']}')";
+		mysqli_query($connection, $query);
+	}
+	else if(isset($_POST['deleteRush'])){
+		$query = "delete from Rush where fName = '{$_SESSION['fName']}' and email = '{$_POST['deleteEmailRush']}' and eventName = '{$_POST['deleteEventName']}' and date = '{$_POST['deleteDate']}'";
+		mysqli_query($connection, $query);
+	}
+	else if(isset($_POST['updateRush'])){
+		mysqli_query($connection, $query);
+	}
+
+
+	mysqli_close($connection);
+?>
+
+
 
 <form method="post">
 
@@ -140,37 +342,6 @@ mysqli_close($connection);
 ?>
   </tbody>
 </table>
-
-
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient-name">
-          </div>
-          <div class="form-group">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="FooterContainer">
 	<footer>Location: Guerrieri Student Union 125 | Phone Number: 410-543-6125</footer>

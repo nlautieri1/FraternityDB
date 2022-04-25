@@ -159,10 +159,8 @@ echo "<h1> {$_SESSION['fName']} Community Service</h1>";
 	$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
 	if(isset($_POST['insert'])){
 		$query = "insert into Community_Service values('{$_POST['eventName']}', '{$_POST['hostName']}', '{$_POST['date']}')";
-		echo $query;
 		mysqli_query($connection, $query);
 		$query = "insert into Attend values('{$_SESSION['fName']}', '{$_POST['eventName']}', '{$_POST['date']}', {$_POST['hours']})";
-		echo $query;
 		mysqli_query($connection, $query);
 	}
 	else if(isset($_POST['delete'])){
@@ -239,37 +237,6 @@ mysqli_close($connection);
 ?>
   </tbody>
 </table>
-
-
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Insert Event</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient-name">
-          </div>
-          <div class="form-group">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Insert</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="FooterContainer">
 	<footer>Location: Guerrieri Student Union 125 | Phone Number: 410-543-6125</footer>
