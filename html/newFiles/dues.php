@@ -71,7 +71,7 @@ echo "<h1> {$_SESSION['fName']} Dues</h1>";
 
 <form method="post">
 
-                Search by: <select name="attribute">
+                Filter by: <select name="attribute">
 	                <option value="sID">Student ID</option>
                         <option value="firstName">First Name</option>
                         <option value="lastName">Last Name</option>
