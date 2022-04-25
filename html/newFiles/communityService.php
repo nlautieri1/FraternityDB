@@ -71,7 +71,7 @@ echo "<h1> {$_SESSION['fName']} Community Service</h1>";
 
 <form method="post">
 
-                Search by: <select name="attribute">
+                Filter by: <select name="attribute">
                         <option value="eventName">Event Name</option>
                         <option value="hostName">Host Name</option>
                         <option value="date">Date</option>
