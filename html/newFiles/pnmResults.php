@@ -12,20 +12,18 @@ $connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "Frater
 $pnm_input=$_POST['pnm_input'];
 $attribute=$_POST['attribute'];
 
-if ($attribute == 'name') {
-        $query="Select * From PNM Where name Like '%$pnm_input%'";
-} else if ($attribute == 'term') {
-        $query="Select * From PNM Where term Like '%$pnm_input%'";
-} else if ($attribute == 'year') {
-        $query="Select * From PNM Where year Like '%$pnm_input%'";
-} else if ($attribute == 'gpa') {
-        $query="Select * From PNM Where gpa >= '$pnm_input'";
+if ($attribute == 'firstName') {
+        $query="Select * From PNM natural join Rush Where firstName Like '%$pnm_input%'";
+} else if ($attribute == 'lastName') {
+        $query="Select * From PNM natural join Rush Where lastName Like '%$pnm_input%'";
 } else if ($attribute == 'phone') {
-        $query="Select * From PNM Where phone Like '%$pnm_input%'";
-} else if ($attribute == 'grade') {
-        $query="Select * From PNM Where grade Like '%$pnm_input%'";
+        $query="Select * From PNM natural join Rush Where phone Like '%$pnm_input%'";
 } else if ($attribute == 'email') {
-        $query="Select * From PNM Where email Like '%$pnm_input%'";
+        $query="Select * From PNM natural join Rush Where email Like '%$pnm_input%'";
+} else if ($attribute == 'gpa') {
+        $query="Select * From PNM natural join Rush Where gpa >= '$pnm_input'";
+} else if ($attribute == 'grade') {
+        $query="Select * From PNM natural join Rush Where grade Like '%$pnm_input%'";
 }
 
 $r=mysqli_query($connection, $query);
