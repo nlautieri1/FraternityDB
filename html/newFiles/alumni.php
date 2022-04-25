@@ -91,7 +91,7 @@
 
 <form method="post">
 
-                Search by: <select name="attribute">
+                Filter by: <select name="attribute">
                         <option value="firstName">First Name</option>
                         <option value="lastName">Last Name</option>
 			<option value="email">Email</option>
