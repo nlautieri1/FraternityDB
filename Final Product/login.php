@@ -32,24 +32,56 @@
 					<button name="login" type="submit" class="btn btn-primary btn-block mb-4 w-50 mx-auto">Sign in</button>
 					<!-- Register button -->
 					<div class="text-center">
-						<p>Is your fraternity not listed?<a href="#!">Request an Account</a></p>
+						<p>Is your fraternity not listed?<br><a href="#!">Request an Account</a></p>
 					</div>
 				</div>
 			</div>
 				<?php
-					$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
-			       	 	if(isset($_POST['login'])){
-					$username = $_POST['username'];
+				if(isset($_POST['username']) && isset($_POST['password']))
+				{
+					if($connection=@mysqli_connect('localhost', 'mdemchuk1', 'Coors478Ultra', 'FraternityDB')){}
+			       	 	$username = $_POST['username'];
 				        $password = $_POST['password'];
-					$query = "select * from Account where username='$username' and password='$password'";
-	
-				        $result = mysqli_query($connection, $query);
-				            if(mysqli_num_rows($result) != 0){
-				            	$row = mysqli_fetch_array($result);
-				            	$_SESSION['fName'] = $row[0];
-				            	header("Location: admin.php");
-				        }
+					
+					/* Get the hashed password from the database based on the username */
+					$result = mysqli_query($connection, "select * from Account where username='$username'");
+
+					/*there is a matching username*/
+					if($row = mysqli_fetch_array($result))
+					{
+						$hashed_password = $row["password"]; //fetch the hashed password associated with the entered username
+						
+						/* Verify the user entered password with using the hashed_password*/
+                                	        if(password_verify($password, $hashed_password))
+						{
+							/* Password entered was correct*/
+							$row = mysqli_fetch_array($result);
+							$_SESSION['fName'] = $row[0];
+							header("Location: admin.php");
+						}
+	                                        else
+						{
+							//Password was NOT correct
+							echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+							<strong>Invalid Credentials</strong>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+							</div>';                
+						}
 					}
+					else
+					{
+						//There is no matching username in the database
+						echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                        <strong>Invalid Credentials</strong>
+                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        </div>';
+					}
+
+				}
 				?>
 		</form>
 		
