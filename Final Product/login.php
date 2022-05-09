@@ -68,7 +68,7 @@
 					/* Get the hashed password from the database based on the username */
 					$result = mysqli_query($connection, "select * from Account where username='$username'");
 
-					/*there is a matching username*/
+					/*if there is a matching username*/
 					if($row = mysqli_fetch_array($result))
 					{
 						$hashed_password = $row["password"]; //fetch the hashed password associated with the entered username
