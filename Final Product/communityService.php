@@ -17,41 +17,61 @@
     <link rel="stylesheet" href="css/home.css">    
 <title>Salisbury Fraternity Homepage</title>
     <style>
-	.navbar-red{
-		background:#bf110c;
-	}
+	   	.navbar-red{
+	       		background:#bf110c;
+	   	}
+	   	.carosel-inner{
+	       		height: 100px;
+	   	}
+	   	.color-me{
+    			color:white;
+	   	}
+		.navbar-red button.navbar-toggler {
+  			border-color: white;
+		}
+		.navbar-red span.navbar-toggler-icon {
+  			background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  			color: white;
+		}
     </style>
   </head>
   <body>
-<nav class="navbar navbar-expand-lg navbar-dark navbar-red">
+<nav class="navbar navbar-expand-lg navbar-red">
     <img src="images/Salisbury_University_logo.png" width="150" height="50" alt="">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="admin.php">Home <span class="sr-only">(current)</span></a>
+      <li class="nav-item">
+        <a class="nav-link color-me" href="admin.php">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="members.php">Members</a>
+        <a class="nav-link color-me" href="members.php">Members</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="alumni.php">Alumni</a>
+        <a class="nav-link color-me" href="alumni.php">Alumni</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="communityService.php">Community Service</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="attendance.php">Attendance</a>
+        <a class="nav-link color-me" href="attendance.php">Attendance</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="dues.php">Dues</a>
+        <a class="nav-link color-me" href="dues.php">Dues</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="pnm.php">PNM's</a>
+        <a class="nav-link color-me" href="pnm.php">PNM's</a>
       </li>
     </ul>
+	<?php
+				if(isset($_SESSION['admin'])){
+					echo '<a href="admin.php"><button class="btn btn-outline-light my-2 my-sm-0" type="submit">Admin Page</button></a>';
+
+				}
+			?>
+
       <a href="logout.php"><button class="btn btn-outline-light my-2 my-sm-0" type="submit">Logout</button></a>
   </div>
 </nav>
