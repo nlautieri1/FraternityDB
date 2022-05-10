@@ -14,7 +14,11 @@
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"><!-- Bootstrap CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/home.css" rel="stylesheet"><?php
+	<link href="css/home.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/js/tom-select.complete.min.js"></script>	
+
+	<?php
 	        echo "<title>{$_SESSION['fName']} Home</title>";
 	        ?>
 	<style>
@@ -56,12 +60,18 @@
 					}
 				?>
 			</ul>
+			<?php
+				if(isset($_SESSION['admin'])){
+					echo '<a href="adminSwap.php"><button class="btn btn-outline-light my-2 my-sm-0" type="submit">Admin Page</button></a>';
+
+				}
+			?>
 			<a href="logout.php"><button class="btn btn-outline-light my-2 my-sm-0" type="submit">Logout</button></a>
 		</div>
 	</nav>
 
 	<?php
-		if($_SESSION['fName'] != 'admin'){
+		if($_SESSION['fName'] != 'admin'){//admin
 			echo "<div class='jumbotron jumbotron-fluid'><div class='container'><h1 class='display-4'>Welcome to the {$_SESSION['fName']} Database</h1></div></div>";
 			echo "<div class='container'><div class='row'>";
 			echo "<div class='col'><div class='card' style='width: 18rem;'><div class='card-body'><h5 class='card-title'>Members</h5><a href='members.php' class='btn btn-primary'>Go to Members</a></div></div></div>";
@@ -74,9 +84,125 @@
 			echo "</div></div>";
 		}
 		else{
-			/*insert code here*/
+			echo '<div class="container"><div class="row"><div class="col text-center">';
+		    echo "<h1> Admin Page </h1>";
+			echo '<button class="btn btn-primary" data-target="#insertFrat" data-toggle="modal" type="button">Insert Fraternity</button> ';
+			echo '<button class="btn btn-primary" data-target="#deleteFrat" data-toggle="modal" type="button">Delete Fraternity</button> ';
+			echo '<button class="btn btn-primary" data-target="#addAccount" data-toggle="modal" type="button">Add Account</button> ';
+            echo '<button class="btn btn-primary" data-target="#deleteAccount" data-toggle="modal" type="button">Delete Account</button> ';
+            echo '<button class="btn btn-primary" data-target="#updateAccount" data-toggle="modal" type="button">Update Account</button>';
+            echo "</div></div></div><br>";
+
+			
+
+			echo "<table class='table table-striped'>";
+			echo "<thead><tr>";
+			echo "<th scope='col'>Fraternity</th>";
+			echo "<th scope='col'>Username</th>";
+			echo "<th scope='col'>Email</th>";
+			echo "<th scope='col'>Password</th>";
+			echo "</tr></thead><tbody>";
+
+			$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+			$query = "select * from Fraternity left join Account on name = fName";
+
+			$r=mysqli_query($connection, $query);
+			while ($row=mysqli_fetch_array($r)) {
+				echo "<tr>";
+				echo "<th scope='row'><a href='swap.php?temp={$row['name']}'> {$row['name']}</a></th>";
+				echo "<td>{$row['username']}</td>";
+				echo "<td>{$row['email']}</td>";
+				echo "<td>{$row['password']}</td>";
+				echo "</tr>";
+			}
+			echo "</tbody></table>";
+			mysqli_close($connection);
 		}
 	?>
+
+	<!-- Insert Fraternity Modal -->
+    <div aria-hidden="true" class="modal fade" id="insertFrat" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" >Add New Fraternity</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden=w"true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="form-group">
+                            <label class="col-form-label" for="recipient-name">Fraternity Name:</label>
+                            <input class="form-control" maxlength="40" name="newFrat" required type="text">
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                            <button class="btn btn-primary" name="insertFrat" type="submit">Insert</button>
+                        </div>
+                   </form>
+				</div>
+            </div>
+        </div>
+	</div>
+
+    <!-- Delete Fraternity Modal -->
+    <div aria-hidden="true" class="modal fade" id="deleteFrat" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Fraternity</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden=w"true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" onSubmit="return confirm('Are you sure you want to delete?')">
+                        <div class="form-group">
+                            <label class="col-form-label" for="recipient-name">Fraternity Name:</label>
+                            <select name="deleteFname" id="delete-frat" placeholder="Select a Fraternity...">
+                                <option value="">Select a Fraternity...</option>
+								<?php
+									$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+									$query = "select * from Fraternity";
+									$r=mysqli_query($connection, $query);
+									while ($row=mysqli_fetch_array($r)){
+										echo "<option value='{$row['name']}'>{$row['name']}</option>";
+									}
+									mysqli_close($connection);
+								?>
+							</select>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                            <button class="btn btn-primary" name="deleteFrat" type="submit">Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+	</div>
+
+
+
+	<?php
+		$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+
+		if(isset($_POST['insertFrat'])){
+			$query = "insert into Fraternity values ('{$_POST['newFrat']}')";
+			mysqli_query($connection, $query);
+		}
+		else if(isset($_POST['deleteFrat'])){
+			$query = "delete from Fraternity  where name = '{$_POST['deleteFname']}'";
+			mysqli_query($connection, $query);
+		}
+		else if(isset($_POST['updateFrat'])){
+			$query = "update Fraternity set name = '" . $_POST['updateTo'] . "' where name = '" . $_POST['updateFrom'] . "'";
+
+		}
+		mysqli_close($connection);
+    ?>
+
 	
 	<div class="FooterContainer">
 		<footer>
@@ -90,5 +216,22 @@
 	</script> 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js">
 	</script>
+    <script>
+        new TomSelect("#delete-frat",{
+        		create: false,
+        		sortField: {
+            			field: "text",
+            			direction: "asc"
+        		}
+		});	
+
+		new TomSelect("#update-frat",{
+        		create: false,
+        		sortField: {
+            			field: "text",
+            			direction: "asc"
+        		}
+		});	
+    </script>
 </body>
 </html>

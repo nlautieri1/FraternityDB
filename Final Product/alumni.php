@@ -63,7 +63,7 @@
 			</ul>
 			<?php
 				if(isset($_SESSION['admin'])){
-					echo '<a href="admin.php"><button class="btn btn-outline-light my-2 my-sm-0" type="submit">Admin Page</button></a>';
+					echo '<a href="adminSwap.php"><button class="btn btn-outline-light my-2 my-sm-0" type="submit">Admin Page</button></a>';
 
 				}
 			?>

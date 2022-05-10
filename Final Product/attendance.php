@@ -63,7 +63,7 @@
 			</ul>
 			<?php
 				if(isset($_SESSION['admin'])){
-					echo '<a href="admin.php"><button class="btn btn-outline-light my-2 my-sm-0" type="submit">Admin Page</button></a>';
+					echo '<a href="adminSwap.php"><button class="btn btn-outline-light my-2 my-sm-0" type="submit">Admin Page</button></a>';
 
 				}
 			?>
@@ -143,7 +143,6 @@
 								</div>
 								<div class="col-md-4">
 									<label class="col-form-label" for="recipient-name">Student ID:</label><br>
-									<select name="deleteSID">
 										<?php
 										    $connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
 										    $query = "select sID, firstName, lastName from Member where fName = '{$_SESSION['fName']}'";

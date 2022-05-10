@@ -18,12 +18,13 @@
 		<br><br>		
 		<form action="login.php" method="post">
 			<div class="fborder border border-secondary bg-light py-5 w-50 d-block mx-auto" style="border-style: groove;">
-				<img alt="" class="d-block h-25 w-25 mx-auto" src="images/Salisbury_University_colored_logo.png"><br>
+				<img alt="" class="d-block h-25 w-25 mx-auto" src="images/SU_Logo.png"><br>
+
 				<div class="form-group">
 					<label class="d-block text-center">Username:</label>
-					<input class="form-control w-50 mx-auto" maxlength="20" name="username" placeholder="Enter Username" required="" type="text"><br>
+					<input class="form-control w-50 mx-auto" maxlength="20" name="username" placeholder="Enter Username" required type="text"><br>
 					<label class="d-block text-center"> Password:</label>
-					<input class="form-control w-50 mx-auto" maxlength="20" name="password" placeholder="Enter Password" required="" type="password"> 
+					<input class="form-control w-50 mx-auto" maxlength="20" name="password" placeholder="Enter Password" required type="password"> 
 				</div>
 					
 				
@@ -32,58 +33,43 @@
 					<button name="login" type="submit" class="btn btn-primary btn-block mb-4 w-50 mx-auto">Sign in</button>
 					<!-- Register button -->
 					<div class="text-center">
-						<p>Is your fraternity not listed?<br><a href="#!">Request an Account</a></p>
+						<p>Is your fraternity not listed?<a href="#" data-toggle='modal' data-target='#register'> Request an Account</a></p>
 					</div>
 				</div>
+<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Contact Information</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        To request an account please contact: <b>mdemchuk@verizon.net</b>
+	<br> with your <b>Fraternity Name, Username, Password, and Email</b>
+      </div>
+    </div>
+  </div>
+</div>			
 			</div>
-				<?php
-				if(isset($_POST['username']) && isset($_POST['password']))
-				{
-					if($connection=@mysqli_connect('localhost', 'mdemchuk1', 'Coors478Ultra', 'FraternityDB')){}
-			       	 	$username = $_POST['username'];
-				        $password = $_POST['password'];
-					
-					/* Get the hashed password from the database based on the username */
-					$result = mysqli_query($connection, "select * from Account where username='$username'");
-
-					/*there is a matching username*/
-					if($row = mysqli_fetch_array($result))
-					{
-						$hashed_password = $row["password"]; //fetch the hashed password associated with the entered username
-						
-						/* Verify the user entered password with using the hashed_password*/
-                                	        if(password_verify($password, $hashed_password))
-						{
-							/* Password entered was correct*/
-							$row = mysqli_fetch_array($result);
-							$_SESSION['fName'] = $row[0];
-							header("Location: admin.php");
-						}
-	                                        else
-						{
-							//Password was NOT correct
-							echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-							<strong>Invalid Credentials</strong>
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-							</button>
-							</div>';                
-						}
-					}
-					else
-					{
-						//There is no matching username in the database
-						echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                                        <strong>Invalid Credentials</strong>
-                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                        </div>';
-					}
-
-				}
-				?>
 		</form>
+
+				<?php
+					$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+			       	 	if(isset($_POST['login'])){
+					$username = $_POST['username'];
+				        $password = $_POST['password'];
+					$query = "select * from Account where username='$username' and password='$password'";
+	
+				        $result = mysqli_query($connection, $query);
+				            if(mysqli_num_rows($result) != 0){
+				            	$row = mysqli_fetch_array($result);
+				            	$_SESSION['fName'] = $row[0];
+				            	header("Location: admin.php");
+				        }
+					}
+				?>
 		
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

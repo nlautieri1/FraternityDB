@@ -61,7 +61,7 @@
 			</ul>
 			<?php
 				if(isset($_SESSION['admin'])){
-					echo '<a href="admin.php"><button class="btn btn-outline-light my-2 my-sm-0" type="submit">Admin Page</button></a>';
+					echo '<a href="adminSwap.php"><button class="btn btn-outline-light my-2 my-sm-0" type="submit">Admin Page</button></a>';
 
 				}
 			?>
@@ -221,6 +221,7 @@
 	    if(isset($_POST['insert'])){
 	        $query = "insert into PNM values ('{$_POST['firstName']}', '{$_POST['lastName']}', '{$_POST['phone']}', '{$_POST['email']}', '{$_POST['grade']}', {$_POST['gpa']})";
 	        mysqli_query($connection, $query);
+			$query = "insert into RUSH values ('{$_S}')"
 	    }
 	    else if(isset($_POST['delete'])){
 	        $query = "delete from PNM where email = '{$_POST['deleteEmail']}'";

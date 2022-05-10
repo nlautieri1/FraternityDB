@@ -68,7 +68,7 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <img src="images/piLambdaPhi.jpg">
+      <h1>&#931;AE</h1>
     </div>
     <div class="col">
       <h1>Sigma Alpha Epsilon</h1>
@@ -84,15 +84,12 @@
 
 <br>
 
-<h3>Current Members</h3>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Current Members</h3>
 
 <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">First Name</th>
-      <th scope="col">Last Name</th>
-    </tr>
-  </thead>
   <tbody>
 	<?php
 		$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
@@ -100,8 +97,7 @@
 		$r=mysqli_query($connection, $query);
         		while ($row=mysqli_fetch_array($r)) {
                 		echo "<tr>";
-                		echo "<th scope='row'>".$row['firstName']."</th>";
-                		echo "<td>".$row['lastName']."</td>";
+                		echo "<th scope='row'> {$row['firstName']} {$row['lastName']}</th>";
             			echo "</tr>";
         }
 	mysqli_close($connection);
@@ -109,6 +105,29 @@
 ?>
   </tbody>
 </table>
+</div>
+
+<div class="col">
+    <h3>Alumni</h3>
+    <table class="table table-striped">
+  <tbody>
+	<?php
+		$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+		$query = "select firstName, lastName from Alumni where fName = 'Sigma Alpha Epsilon'";
+		$r=mysqli_query($connection, $query);
+        		while ($row=mysqli_fetch_array($r)) {
+                		echo "<tr>";
+                		echo "<th scope='row'> {$row['firstName']} {$row['lastName']}</th>";
+            			echo "</tr>";
+        }
+	mysqli_close($connection);
+
+?>
+  </tbody>
+</table>
+</div>
+
+</div></div>
 
 
 <div class="FooterContainer">
