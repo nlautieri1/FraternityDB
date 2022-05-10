@@ -58,8 +58,8 @@
 		<div class="col">
 			<form action="superAdmin.php" method="post">
 				<div class="w-100 d-inline mt-5">
-					<div class="form-group">
-						<label class="text-left">Password Hasher:</label>
+					<div class="form-group w-75 mx-auto">
+						<label class="text-left">Password Hash:</label>
 						<input class="form-control d-inline w-75" maxlength="20" name="password" placeholder="Enter Password" required="" type="password">
 					</div>
 					<div class="form-group">
@@ -72,6 +72,119 @@
 	</div>
 </div>
 
+<!-- Insert Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="insert" role="dialog" tabindex="-1">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Add New Fraternity</h5>
+				<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+					<span aria-hidden=w"true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form method="post">
+					<div class="form-group">
+						<div class="row md-form mb-5">
+							<div class="col-md-4">
+								<label class="col-form-label" for="recipient-name">Fraternity Name:</label> 
+								<input class="form-control" maxlength="40" name="insertFname" required="" type="text">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+						<button class="btn btn-primary" name="insert" type="submit">Insert</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Delete Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="delete" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                        <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Delete Fraternity</h5>
+                                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                        <span aria-hidden=w"true">&times;</span>
+                                </button>
+                        </div>
+                        <div class="modal-body">
+                                <form method="post">
+                                        <div class="form-group">
+                                                <div class="row md-form mb-5">
+                                                        <div class="col-md-4">
+                                                                <label class="col-form-label" for="recipient-name">Fraternity Name:</label>
+                                                                <input class="form-control" maxlength="40" name="deleteFname" required="" type="text">
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                                <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                                                <button class="btn btn-primary" name="delete" type="submit">Delete</button>
+                                        </div>
+                                </form>
+                        </div>
+                </div>
+        </div>
+</div>
+
+<!-- Update Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="update" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                        <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Update Fraternity Name</h5>
+                                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                        <span aria-hidden=w"true">&times;</span>
+                                </button>
+                        </div>
+                        <div class="modal-body">
+                                <form method="post">
+                                        <div class="form-group">
+                                                <div class="row md-form mb-5">
+                                                        <div class="col-md-4">
+                                                                <label class="col-form-label" for="recipient-name">Old Fraternity Name:</label>
+                                                                <input cliass="form-control" maxlength="40" name="updateFrom" required="" type="text">
+							</div>
+							<div class="col-md-4">
+                                                                <label class="col-form-label" for="recipient-name">New Fraternity Name:</label>
+                                                                <input cliass="form-control" maxlength="40" name="updateTo"i required="" type="text">
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                                <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                                                <button class="btn btn-primary" name="update" type="submit">Update</button>
+                                        </div>
+                                </form>
+                        </div>
+                </div>
+        </div>
+</div>
+	<?php
+	    $connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+	    
+	    if(isset($_POST['insert'])){
+		  $query = "insert into Fraternity values ('{$_POST['insertFname']}')";
+
+	        mysqli_query($connection, $query);
+	    }
+	    else if(isset($_POST['delete'])){
+	        $query = "delete from Fraternity  where name = '{$_POST['deleteFname']}'";
+	        mysqli_query($connection, $query);
+	    }
+	    else if(isset($_POST['updateTo']) && isset($_POST['updateFrom']))
+	    {
+		
+	        $query = "update Fraternity set name = '" . $_POST['updateTo'] . "' where name = '" . $_POST['updateFrom'] . "'";
+	        
+	    }
+		mysqli_close($connection);
+	?>
 <br>
 
  <?php
@@ -87,10 +200,16 @@
 ?>	
 
 <br>
-
-
+<div class="fluid container">
+	<div class="row">
+		<div class="col text-center">
+			<button class="btn btn-primary" data-target="#insert" data-toggle="modal" type="button">Insert</button>
+			<button class="btn btn-primary" data-target="#delete" data-toggle="modal" type="button">Delete</button>
+			<button class="btn btn-primary" data-target="#update" data-toggle="modal" type="button">Update</button>
+		</div>
+	</div>
+</div>
 <h3>Fraternities</h3>
-
 <table class="table table-striped">
   <thead>
     <tr>
