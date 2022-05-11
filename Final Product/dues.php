@@ -73,7 +73,10 @@
 			<div class="col text-center">
 				<?php
 				echo "<h1> {$_SESSION['fName']} Dues</h1>";
-				?><button class="btn btn-primary" data-target="#exampleModal" data-toggle="modal" data-whatever="@mdo" type="button">Insert</button> <button class="btn btn-primary" data-target="#exampleModal" data-toggle="modal" data-whatever="@fat" type="button">Delete</button> <button class="btn btn-primary" data-target="#exampleModal" data-toggle="modal" data-whatever="@getbootstrap" type="button">Update</button>
+				?>
+				<button class="btn btn-primary" data-target="#exampleModal" data-toggle="modal" data-whatever="@mdo" type="button">Insert</button>
+				<button class="btn btn-primary" data-target="#exampleModal" data-toggle="modal" data-whatever="@fat" type="button">Delete</button>
+				<button class="btn btn-primary" data-target="#exampleModal" data-toggle="modal" data-whatever="@getbootstrap" type="button">Update</button>
 			</div>
 		</div>
 	</div>
