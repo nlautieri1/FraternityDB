@@ -92,84 +92,122 @@ echo "<h1> {$_SESSION['fName']} Community Service</h1>";
   </div>
 </div>
 
-<div class="modal fade" id="insert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Insert Modal -->
+<div class="modal fade" id="insert" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Insert Event</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title">Insert Event</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
         <form method="post">
           <div class="form-group">
-		<div class="row md-form mb-5 ">
- 			<div class="col-md-4">
-				<label for="recipient-name" class="col-form-label">Event Name:</label>
-            			<input type="text" class="form-control" name="eventName" required>
-			</div>
- 			<div class="col-md-4">
-				<label for="recipient-name" class="col-form-label">Host Name:</label>
-            			<input type="text" class="form-control" name="hostName" required>
-			</div>
- 		</div>
+		        <div class="row md-form mb-5 ">
+ 			        <div class="col-md-4">
+				        <label for="recipient-name" class="col-form-label">Event Name:</label>
+            		<input type="text" class="form-control" name="eventName" required>
+			        </div>
+ 			        <div class="col-md-4">
+				        <label for="recipient-name" class="col-form-label">Host Name:</label>
+            		<input type="text" class="form-control" name="hostName" required>
+			        </div>
+ 		        </div>
           </div>
           <div class="form-group">
-		<div class="row md-form mb-5 ">
- 			<div class="col-md-4">
-				<label for="recipient-name" class="col-form-label">Date:</label><br>
-            			<input type="date" name="date" required>
-			</div>
-			<div class="col-md-4">
-				<label for="recipient-name" class="col-form-label">Hours:</label>
-            			<input type="number" class="form-control" step="0.01" name="hours" max="24" min="0" required>		
-			</div>
- 		</div>
+		        <div class="row md-form mb-5 ">
+ 			        <div class="col-md-4">
+				        <label for="recipient-name" class="col-form-label">Date:</label><br>
+            		<input type="date" name="date" required>
+			        </div>
+			        <div class="col-md-4">
+				        <label for="recipient-name" class="col-form-label">Hours:</label>
+            	  <input type="number" class="form-control" step="0.01" name="hours" max="24" min="0" required>		
+			        </div>
+ 		        </div>
           </div>
-	<div class="modal-footer">
-        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        	<button type="submit" class="btn btn-primary" name="insert">Insert</button>
-     	 </div>
-
+	        <div class="modal-footer">
+        	    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        	    <button type="submit" class="btn btn-primary" name="insert">Insert</button>
+     	    </div>
         </form>
       </div>
-      
     </div>
   </div>
 </div>
 
-<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Delete Modal -->
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete Member</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title">Delete Member</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <form method="post" onSubmit="return confirm('Are you sure you want to delete?')">
+          <div class="form-group">
+		        <div class="row md-form mb-5 ">
+			        <div class="col-md-4">
+				        <label for="recipient-name" class="col-form-label">Event Name:</label>
+            		<input type="text" class="form-control" name="deleteEventName" required>
+			        </div>
+			        <div class="col-md-4">
+				        <label for="recipient-name" class="col-form-label">Date:</label><br>
+            	  <input type="date" name="deleteDate" required>
+			        </div>
+ 		        </div>
+          </div>
+	        <div class="modal-footer">
+        	  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        	  <button type="submit" class="btn btn-primary" name="delete">Delete</button>
+     	    </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Update Modal -->
+<div class="modal fade" id="update" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Event</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
         <form method="post">
           <div class="form-group">
-		<div class="row md-form mb-5 ">
-			<div class="col-md-4">
-				<label for="recipient-name" class="col-form-label">Event Name:</label>
-            			<input type="text" class="form-control" name="deleteEventName" required>
-			</div>
-			<div class="col-md-4">
-				<label for="recipient-name" class="col-form-label">Date:</label><br>
-            			<input type="date" name="deleteDate" required>
-			</div>
- 		</div>
+		        <div class="row md-form mb-5 ">
+ 			        <div class="col-md-4">
+				        <label for="recipient-name" class="col-form-label">Event Name:</label>
+            		<input type="text" class="form-control" name="updateName" required>
+			        </div>
+ 			        <div class="col-md-4">
+				        <label for="recipient-name" class="col-form-label">Host Name:</label>
+            		<input type="text" class="form-control" name="updateHost" required>
+			        </div>
+ 		        </div>
           </div>
-	<div class="modal-footer">
-        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        	<button type="submit" class="btn btn-primary" name="delete">Delete</button>
-     	 </div>
-
+          <div class="form-group">
+		        <div class="row md-form mb-5 ">
+ 			        <div class="col-md-4">
+				        <label for="recipient-name" class="col-form-label">Date:</label><br>
+            		<input type="date" name="updateDate" required>
+			        </div>
+			        <div class="col-md-4">
+				        <label for="recipient-name" class="col-form-label">Hours:</label>
+            	  <input type="number" class="form-control" step="0.01" name="updateHours" max="24" min="0" required>		
+			        </div>
+ 		        </div>
+          </div>
+	        <div class="modal-footer">
+        	    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        	    <button type="submit" class="btn btn-primary" name="update">Update</button>
+     	    </div>
         </form>
       </div>
-      
     </div>
   </div>
 </div>
@@ -185,12 +223,20 @@ echo "<h1> {$_SESSION['fName']} Community Service</h1>";
 	}
 	else if(isset($_POST['delete'])){
 		$query = "delete from Attend where eventName = '{$_POST['deleteEventName']}' and date = '{$_POST['deleteDate']}' and fName = '{$_SESSION['fName']}'";
+    mysqli_query($connection, $query);
+    $query = "select eventName from Community_Service where eventName = '{$_POST['deleteEventName']}'";
+    $row = mysqli_query($connection, $query);
+    if(mysqli_num_rows($row) == 1){
+      $query = "delete from Community_Service where eventName = '{$_POST['deleteEventName']}'";
+      mysqli_query($connection, $query);
+    }
 		mysqli_query($connection, $query);
-		//insert delete function to delete from community service
 	}
 	else if(isset($_POST['update'])){
-		$query = "delete from Member where sID = '$deleteSID'";
+		$query = "update Community_Service set hostName = '{$_POST['updateHost']}' where eventName = '{$_POST['updateName']}' and date = '{$_POST['updateDate']}'";
 		mysqli_query($connection, $query);
+    $query = "update Attend set hours = '{$_POST['updateHours']}' where eventName = '{$_POST['updateName']}' and fName = '{$_SESSION['fName']}' and date = '{$_POST['updateDate']}'";
+    mysqli_query($connection, $query);
 	}
 
 	mysqli_close($connection);

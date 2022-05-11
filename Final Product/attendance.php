@@ -11,7 +11,10 @@
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"><!-- Bootstrap CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/home.css" rel="stylesheet"><?php
+	<link href="css/home.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/js/tom-select.complete.min.js"></script>
+	<?php
 	    echo "<title>{$_SESSION['fName']} Attendance</title>";
 	 ?>
 	<style>
@@ -76,10 +79,13 @@
 			<div class="col text-center">
 				<?php
 				    echo "<h1> {$_SESSION['fName']} Attendance</h1>";
-				?><button class="btn btn-primary" data-target="#insert" data-toggle="modal" type="button">Insert</button> <button class="btn btn-primary" data-target="#delete" data-toggle="modal" type="button">Delete</button> <button class="btn btn-primary" data-target="#update" data-toggle="modal" type="button">Update</button>
+				?>
+				<button class="btn btn-primary" data-target="#insert" data-toggle="modal" type="button">Insert</button>
+				<button class="btn btn-primary" data-target="#delete" data-toggle="modal" type="button">Delete</button>
 			</div>
 		</div>
 	</div>
+	<br>
 	<form method="post">
 		Filter by: <select name="attribute">
 			<option value="eventName">
@@ -93,65 +99,86 @@
 			</option>
 		</select> <input id="search" name="attendance_input" placeholder="Type here" type="text"> <input id="submit" type="submit" value="Search">
 	</form>
-	<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="insert" role="dialog" tabindex="-1">
+
+	<!-- Insert Modal -->
+	<div aria-hidden="true" class="modal fade" id="insert" role="dialog" tabindex="-1">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Insert Member</h5><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+					<h5 class="modal-title">Insert Member</h5><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
 				</div>
 				<div class="modal-body">
 					<form method="post">
 						<div class="form-group">
 							<div class="row md-form mb-5">
 								<div class="col-md-4">
-									<label class="col-form-label" for="recipient-name">Event Name:</label> <input class="form-control" name="eventName" required="" type="text">
+									<label class="col-form-label" for="recipient-name">Event Name:</label>
+									<input class="form-control" name="eventName" required type="text">
 								</div>
 								<div class="col-md-3">
 									<label class="col-form-label" for="recipient-name">Date:</label><br>
-									<input name="date" required="" type="date">
+									<input name="date" required type="date">
 								</div>
 								<div class="col-md-4">
-									<label class="col-form-label" for="recipient-name">Student ID:</label><br>
-									<input class="form-control" maxlength="7" name="sID" required="" type="text">
+								<label class="col-form-label" for="recipient-name">Student ID:</label>
+									<select name="insertSID" id="insert-attend" placeholder="Select a SID...">
+										<option value="">Select a SID...</option>
+					    					<?php
+										    	$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+										    	$query = "select sID, firstName, lastName from Member where fName = '{$_SESSION['fName']}'";
+										    	$r=mysqli_query($connection, $query);
+										        while ($row=mysqli_fetch_array($r)) {
+										            echo "<option value='{$row['sID']}'>{$row['sID']} - {$row['firstName']} {$row['lastName']}</option>";
+										    	}
+										    	mysqli_close($connection);
+											?>
+									</select>
 								</div>
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button> <button class="btn btn-primary" name="insert" type="submit">Insert</button>
+							<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+							<button class="btn btn-primary" name="insert" type="submit">Insert</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<!-- Delete Modal -->
 	<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="delete" role="dialog" tabindex="-1">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Delete Member Attendance</h5><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+					<h5 class="modal-title" id="exampleModalLabel">Delete Member Attendance</h5>
+					<button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
 				</div>
 				<div class="modal-body">
-					<form method="post">
+					<form method="post" onSubmit="return confirm('Are you sure you want to delete?')">
 						<div class="form-group">
 							<div class="row md-form mb-5">
 								<div class="col-md-4">
-									<label class="col-form-label" for="recipient-name">Event Name:</label> <input class="form-control" name="deleteEventName" required="" type="text">
+									<label class="col-form-label" for="recipient-name">Event Name:</label>
+									<input class="form-control" name="deleteEventName" required type="text">
 								</div>
 								<div class="col-md-3">
 									<label class="col-form-label" for="recipient-name">Date:</label><br>
-									<input name="deleteDate" required="" type="date">
+									<input name="deleteDate" required type="date">
 								</div>
 								<div class="col-md-4">
-									<label class="col-form-label" for="recipient-name">Student ID:</label><br>
-										<?php
-										    $connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
-										    $query = "select sID, firstName, lastName from Member where fName = '{$_SESSION['fName']}'";
-										    $r=mysqli_query($connection, $query);
+									<label class="col-form-label" for="recipient-name">Student ID:</label>
+									<select name="deleteSID" id="delete-attend" placeholder="Select a SID...">
+										<option value="">Select a SID...</option>
+					    					<?php
+										    	$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+										    	$query = "select sID, firstName, lastName from Member where fName = '{$_SESSION['fName']}'";
+										    	$r=mysqli_query($connection, $query);
 										        while ($row=mysqli_fetch_array($r)) {
 										            echo "<option value='{$row['sID']}'>{$row['sID']} - {$row['firstName']} {$row['lastName']}</option>";
-										    }
-										    mysqli_close($connection);
-										?>
+										    	}
+										    	mysqli_close($connection);
+											?>
 									</select>
 								</div>
 							</div>
@@ -163,21 +190,18 @@
 				</div>
 			</div>
 		</div>
-	</div><?php
+	</div>
+	
+	<?php
 	    $connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
 	    if(isset($_POST['insert'])){
-	        $query = "insert into Attendance values ('{$_POST['eventName']}', '{$_POST['date']}', '{$_POST['sID']}')";
+	        $query = "insert into Attendance values ('{$_POST['eventName']}', '{$_POST['date']}', '{$_POST['insertSID']}')";
 	        mysqli_query($connection, $query);
 	    }
 	    else if(isset($_POST['delete'])){
 	        $query = "delete from Attendance where sID = '{$_POST['deleteSID']}' and date = '{$_POST['deleteDate']}' and eventName = '{$_POST['deleteEventName']}'";
 	        mysqli_query($connection, $query);
 	    }
-	    else if(isset($_POST['update'])){
-	        $query = "delete from Member where sID = '$deleteSID'";
-	        mysqli_query($connection, $query);
-	    }
-
 	    mysqli_close($connection);
 	?><br>
 	<table class="table table-striped">
@@ -233,6 +257,22 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js">
 	</script> 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js">
+	</script>
+	<script>
+		new TomSelect("#insert-attend",{
+        		create: false,
+        		sortField: {
+            			field: "text",
+            			direction: "asc"
+        		}
+		});
+		new TomSelect("#delete-attend",{
+        		create: false,
+        		sortField: {
+            			field: "text",
+            			direction: "asc"
+        		}
+		});
 	</script>
 </body>
 </html>

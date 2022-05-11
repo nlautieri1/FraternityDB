@@ -87,35 +87,170 @@
 			</div>
 		</div>
 	</div>
-	<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="insert" role="dialog" tabindex="-1">
+
+	<!-- Insert member -->
+	<div aria-hidden="true" class="modal fade" id="insert" role="dialog" tabindex="-1">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Insert Member</h5><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+					<h5 class="modal-title">Insert Member</h5>
+					<button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
 				</div>
 				<div class="modal-body">
 					<form method="post">
 						<div class="form-group">
 							<div class="row md-form mb-5">
 								<div class="col-md-4">
-									<label class="col-form-label" for="recipient-name">First Name:</label> <input class="form-control" name="firstName" required="" type="text">
+									<label class="col-form-label" for="recipient-name">First Name:</label>
+									<input class="form-control" name="firstName" required type="text">
 								</div>
 								<div class="col-md-4">
-									<label class="col-form-label" for="recipient-name">Last Name:</label> <input class="form-control" name="lastName" required="" type="text">
+									<label class="col-form-label" for="recipient-name">Last Name:</label>
+									<input class="form-control" name="lastName" required type="text">
 								</div>
 								<div class="col-md-4">
-									<label class="col-form-label" for="recipient-name">Student ID:</label> <input class="form-control" maxlength="7" name="sID" required="" type="text">
+									<label class="col-form-label" for="recipient-name">Student ID:</label>
+									<input class="form-control" pattern="[0-9]{7}" maxlength="7" name="sID" required type="text">
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="row md-form mb-5">
 								<div class="col-md-4">
-									<label class="col-form-label" for="recipient-name">Position:</label> <input class="form-control" name="position" required="" type="text">
+									<label class="col-form-label" for="recipient-name">Position:</label> <input class="form-control" name="position" type="text">
 								</div>
 								<div class="col-md-4">
 									<label class="col-form-label" for="recipient-name">Grade:</label><br>
 									<select name="grade">
+										<option value="Freshman">Freshman</option>
+										<option value="Sophomore">Sophomore</option>
+										<option value="Junior">Junior</option>
+										<option value="Senior">Senior</option>
+									</select>
+								</div>
+								<div class="col-md-3">
+									<label class="col-form-label" for="recipient-name">Phone Number:</label> <input name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required type="tel">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row md-form mb-5">
+								<div class="col-md-4">
+									<label class="col-form-label" for="recipient-name">Email:</label>
+									<input class="form-control" name="email" required type="email">
+								</div>
+								<div class="col-md-4">
+									<label class="col-form-label" for="recipient-name">Major:</label>
+									<select name="major" id="select-major" placeholder="Select a Major..." required>
+										<option value="">Select a Major...</option>
+					    					<?php
+										    $connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+										    $query = "select * from Major";
+										    $r=mysqli_query($connection, $query);
+										        while ($row=mysqli_fetch_array($r)) {
+										            echo "<option value='{$row['name']}'>{$row['name']}</option>";
+										    }
+										    mysqli_close($connection);
+										?>
+									</select>
+								</div>
+								<div class="col-md-4">
+									<label class="col-form-label" for="recipient-name">GPA:</label>
+									<input class="form-control" max="4" min="0" name="gpa" required step="0.01" type="number">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+							<button class="btn btn-primary" name="insert" type="submit">Insert</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- delete member -->
+	<div aria-hidden="true" class="modal fade" id="delete" role="dialog" tabindex="-1">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" >Delete Member</h5>
+					<button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body">
+					<form method="post" onSubmit="return confirm('Are you sure you want to delete?')">
+						<div class="form-group">
+									<label class="col-form-label" for="recipient-name">Student ID:</label>
+									<select name="deleteSID" id="select-sidd" placeholder="Select a SID...">
+										<option value="">Select a SID...</option>
+					    					<?php
+										    	$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+										    	$query = "select sID, firstName, lastName from Member where fName = '{$_SESSION['fName']}'";
+										    	$r=mysqli_query($connection, $query);
+										        while ($row=mysqli_fetch_array($r)) {
+										            echo "<option value='{$row['sID']}'>{$row['sID']} - {$row['firstName']} {$row['lastName']}</option>";
+										    	}
+										    	mysqli_close($connection);
+											?>
+									</select>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+							<button class="btn btn-primary" name="delete" type="submit">Delete</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Update member -->
+	<div aria-hidden="true" class="modal fade" id="update" role="dialog" tabindex="-1">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Update Member</h5>
+					<button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body">
+					<form method="post">
+						<div class="form-group">
+							<div class="row md-form mb-5">
+								<div class="col-md-4">
+									<label class="col-form-label" for="recipient-name">First Name:</label>
+									<input class="form-control" name="updateFirstName" required type="text">
+								</div>
+								<div class="col-md-4">
+									<label class="col-form-label" for="recipient-name">Last Name:</label>
+									<input class="form-control" name="updateLastName" required type="text">
+								</div>
+								<div class="col-md-4">
+									<label class="col-form-label" for="recipient-name">Student ID:</label>
+									<select name="updateSID" id="select-update" placeholder="Select a SID...">
+										<option value="">Select a SID...</option>
+					    					<?php
+										    	$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+										    	$query = "select sID, firstName, lastName from Member where fName = '{$_SESSION['fName']}'";
+										    	$r=mysqli_query($connection, $query);
+										        while ($row=mysqli_fetch_array($r)) {
+										            echo "<option value='{$row['sID']}'>{$row['sID']} - {$row['firstName']} {$row['lastName']}</option>";
+										    	}
+										    	mysqli_close($connection);
+											?>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row md-form mb-5">
+								<div class="col-md-4">
+									<label class="col-form-label" for="recipient-name">Position:</label>
+									<input class="form-control" name="updatePosition" type="text">
+								</div>
+								<div class="col-md-4">
+									<label class="col-form-label" for="recipient-name">Grade:</label><br>
+									<select name="updateGrade">
 										<option value="Freshman">
 											Freshman
 										</option>
@@ -131,39 +266,42 @@
 									</select>
 								</div>
 								<div class="col-md-3">
-									<label class="col-form-label" for="recipient-name">Phone Number:</label> <input name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required="" type="tel">
+									<label class="col-form-label" for="recipient-name">Phone Number:</label>
+									<input name="updatePhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required type="tel">
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="row md-form mb-5">
 								<div class="col-md-4">
-									<label class="col-form-label" for="recipient-name">Email:</label> <input class="form-control" name="email" required="" type="email">
+									<label class="col-form-label" for="recipient-name">Email:</label>
+									<input class="form-control" name="updateEmail" required type="email">
 								</div>
 								<div class="col-md-4">
 									<label class="col-form-label" for="recipient-name">Major:</label>
-									<select name="major" id="select-major" placeholder="Select a Major...">
+									<select name="updateMajor" id="select-majord" placeholder="Select a Major...">
 										<option value="">Select a Major...</option>
 					    					<?php
-										    $connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
-										    $query = "select * from Major";
-										    $r=mysqli_query($connection, $query);
-										        while ($row=mysqli_fetch_array($r)) {
-										            echo "<option value='{$row['name']}'>{$row['name']}</option>";
-										    }
-										    mysqli_close($connection);
-										?>
-
+										    	$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+										    	$query = "select * from Major";
+										    	$r=mysqli_query($connection, $query);
+										        	while ($row=mysqli_fetch_array($r)) {
+										            	echo "<option value='{$row['name']}'>{$row['name']}</option>";
+										    	}
+										    	mysqli_close($connection);
+											?>
 									</select>
 
 								</div>
 								<div class="col-md-4">
-									<label class="col-form-label" for="recipient-name">GPA:</label> <input class="form-control" max="4" min="0" name="gpa" required="" step="0.01" type="number">
+									<label class="col-form-label" for="recipient-name">GPA:</label>
+									<input class="form-control" max="4" min="0" name="updateGPA" required step="0.01" type="number">
 								</div>
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button> <button class="btn btn-primary" name="insert" type="submit">Insert</button>
+							<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+							<button class="btn btn-primary" name="update" type="submit">Update</button>
 						</div>
 					</form>
 				</div>
@@ -171,39 +309,6 @@
 		</div>
 	</div>
 
-	<!-- delete member -->
-	<div aria-hidden="true" class="modal fade" id="delete" role="dialog" tabindex="-1">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" >Delete Member</h5><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-				</div>
-				<div class="modal-body">
-					<form method="post">
-						<div class="form-group">
-									<label class="col-form-label" for="recipient-name">Student ID:</label>
-									<select name="deleteSID" id="select-sidd" placeholder="Select a SID...">
-										<option value="">Select a SID...</option>
-					    					<?php
-										    $connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
-										    $query = "select sID, firstName, lastName from Member where fName = '{$_SESSION['fName']}'";
-										    $r=mysqli_query($connection, $query);
-										        while ($row=mysqli_fetch_array($r)) {
-										            echo "<option value='{$row['sID']}'>{$row['sID']} - {$row['firstName']} {$row['lastName']}</option>";
-										    }
-										    mysqli_close($connection);
-										?>
-									</select>
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button> <button class="btn btn-primary" name="delete" type="submit">Delete</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	
 	<!-- Graduate Modal -->
 	<div aria-hidden="true" class="modal fade" id="graduate" role="dialog" tabindex="-1">
 		<div class="modal-dialog modal-sm" role="document">
@@ -238,37 +343,40 @@
 		</div>
 	</div>
 
-	
-
 	<?php
 	    $connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
 	    if(isset($_POST['insert'])){
 	        $query = "insert into Member values ('{$_SESSION['fName']}', '{$_POST['firstName']}', '{$_POST['lastName']}', '{$_POST['position']}', '{$_POST['grade']}', {$_POST['gpa']}, '{$_POST['phone']}', '{$_POST['email']}', '{$_POST['major']}', '{$_POST['sID']}')";
 	        mysqli_query($connection, $query);
+
 	    }
 	    else if(isset($_POST['delete'])){
 	        $query = "delete from Dues where sID = '{$_POST['deleteSID']}'";
 	        mysqli_query($connection, $query);
-		$query = "delete from Attendance where sID = '{$_POST['deleteSID']}'";
+			$query = "delete from Attendance where sID = '{$_POST['deleteSID']}'";
 	        mysqli_query($connection, $query);
-		$query = "delete from Member where sID = '{$_POST['deleteSID']}'";
+			$query = "delete from Member where sID = '{$_POST['deleteSID']}'";
 	        mysqli_query($connection, $query);
+
 	    }
 	    else if(isset($_POST['update'])){
-	        $query = "delete from Member where sID = '$deleteSID'";
+	        $query = "update Member set firstName = '{$_POST['updateFirstName']}', lastName = '{$_POST['updateLastName']}', 
+						position = '{$_POST['updatePosition']}', grade = '{$_POST['updateGrade']}', email = '{$_POST['updateEmail']}',
+						major = '{$_POST['updateMajor']}', gpa = '{$_POST['updateGPA']}' where sID = '{$_POST['updateSID']}'";
 	        mysqli_query($connection, $query);
+
 	    }
 	    else if(isset($_POST['graduate'])){
-		$query = "delete from Dues where sID = '{$_POST['graduateSID']}'";
+			$query = "delete from Dues where sID = '{$_POST['graduateSID']}'";
 	        mysqli_query($connection, $query);
-		$query = "delete from Attendance where sID = '{$_POST['graduateSID']}'";
+			$query = "delete from Attendance where sID = '{$_POST['graduateSID']}'";
 	        mysqli_query($connection, $query);
-		$query = "select * from Member where sID = '{$_POST['graduateSID']}'";
-		$t = mysqli_query($connection, $query);
-		$temp = mysqli_fetch_array($t);
-		$query = "insert into Alumni values ('{$temp['firstName']}', '{$temp['lastName']}', '{$_SESSION['fName']}', '{$temp['email']}')";
-		mysqli_query($connection, $query);
-		$query = "delete from Member where sID = '{$_POST['graduateSID']}'";
+			$query = "select * from Member where sID = '{$_POST['graduateSID']}'";
+			$t = mysqli_query($connection, $query);
+			$temp = mysqli_fetch_array($t);
+			$query = "insert into Alumni values ('{$temp['firstName']}', '{$temp['lastName']}', '{$_SESSION['fName']}', '{$temp['email']}')";
+			mysqli_query($connection, $query);
+			$query = "delete from Member where sID = '{$_POST['graduateSID']}'";
 	        mysqli_query($connection, $query);
 	    }
 
@@ -352,11 +460,13 @@
 			        $query="Select * From Member Where sID = '$member_input' and fName = '{$_SESSION['fName']}'";
 			}
 
+			$query .= " order by lastName";
+
 			$r=mysqli_query($connection, $query);
 			        while ($row=mysqli_fetch_array($r)) {
 			                echo "<tr>";
 			                echo "<th scope='row'>".$row['sID']."</th>";
-			                echo "<td> {$row['firstName']} {$row['lastName']}</td>";
+			                echo "<td>{$row['lastName']}, {$row['firstName']}</td>";
 			                echo "<td>".$row['position']."</td>";
 			                echo "<td>".$row['grade']."</td>";
 			                echo "<td>".$row['major']."</td>";
@@ -369,6 +479,7 @@
 			?>
 		</tbody>
 	</table>
+	<br><br>
 	<div class="FooterContainer">
 		<footer>
 			Location: Guerrieri Student Union 125 | Phone Number: 410-543-6125
@@ -388,6 +499,13 @@
             			field: "text",
             			direction: "asc"
         		}
+		});
+		new TomSelect("#select-majord",{
+        		create: false,
+        		sortField: {
+            			field: "text",
+            			direction: "asc"
+        		}
 		});	
 		new TomSelect("#select-sidg",{
         		create: false,
@@ -397,6 +515,13 @@
         		}
 		});
 		new TomSelect("#select-sidd",{
+        		create: false,
+        		sortField: {
+            			field: "text",
+            			direction: "asc"
+        		}
+		});
+		new TomSelect("#select-update",{
         		create: false,
         		sortField: {
             			field: "text",

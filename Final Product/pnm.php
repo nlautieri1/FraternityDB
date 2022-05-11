@@ -73,7 +73,10 @@
 			<div class="col text-center">
 				<?php
 				    echo "<h1> {$_SESSION['fName']} PNM's</h1>";
-				?><button class="btn btn-primary" data-target="#insert" data-toggle="modal" type="button">Insert PNM</button> <button class="btn btn-primary" data-target="#delete" data-toggle="modal" type="button">Delete PNM</button> <button class="btn btn-primary" data-target="#update" data-toggle="modal" type="button">Update PNM</button> <button class="btn btn-primary" data-target="#insertRush" data-toggle="modal" type="button">Insert Rush Event</button> <button class="btn btn-primary" data-target="#deleteRush" data-toggle="modal" type="button">Delete Rush Event</button> <button class="btn btn-primary" data-target="#updateRush" data-toggle="modal" type="button">Update Rush Event</button>
+				?>
+				<button class="btn btn-primary" data-target="#insert" data-toggle="modal" type="button">Insert</button>
+				<button class="btn btn-primary" data-target="#delete" data-toggle="modal" type="button">Delete</button>
+				<button class="btn btn-primary" data-target="#update" data-toggle="modal" type="button">Update</button>
 			</div>
 		</div>
 	</div>
@@ -145,7 +148,7 @@
 					<h5 class="modal-title" id="exampleModalLabel">Delete Member</h5><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
 				</div>
 				<div class="modal-body">
-					<form method="post">
+					<form method="post" onSubmit="return confirm('Are you sure you want to delete?')">
 						<div class="form-group">
 							<label class="col-form-label" for="recipient-name">Email:</label> <input class="form-control" name="deleteEmail" required="" type="email">
 						</div>
@@ -157,88 +160,24 @@
 			</div>
 		</div>
 	</div>
-	<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="insertRush" role="dialog" tabindex="-1">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Insert PNM Rush Event</h5><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-				</div>
-				<div class="modal-body">
-					<form method="post">
-						<div class="form-group">
-							<div class="row md-form mb-5">
-								<div class="col-md-4">
-									<label class="col-form-label" for="recipient-name">Event Name:</label> <input class="form-control" name="eventName" required="" type="text">
-								</div>
-								<div class="col-md-4">
-									<label class="col-form-label" for="recipient-name">Email:</label> <input class="form-control" name="emailRush" required="" type="email">
-								</div>
-								<div class="col-md-4">
-									<label class="col-form-label" for="recipient-name">Date:</label><br>
-									<input name="date" required="" type="date">
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button> <button class="btn btn-primary" name="insertRush" type="submit">Insert</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="deleteRush" role="dialog" tabindex="-1">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Delete PNM Rush Event</h5><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-				</div>
-				<div class="modal-body">
-					<form method="post">
-						<div class="form-group">
-							<div class="row md-form mb-5">
-								<div class="col-md-4">
-									<label class="col-form-label" for="recipient-name">Event Name:</label> <input class="form-control" name="deleteEventName" required="" type="text">
-								</div>
-								<div class="col-md-4">
-									<label class="col-form-label" for="recipient-name">Email:</label> <input class="form-control" name="deleteEmailRush" required="" type="email">
-								</div>
-								<div class="col-md-4">
-									<label class="col-form-label" for="recipient-name">Date:</label><br>
-									<input name="deleteDate" required="" type="date">
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button> <button class="btn btn-primary" name="deleteRush" type="submit">Delete</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div><?php
+	<?php
 	    $connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
 	    if(isset($_POST['insert'])){
 	        $query = "insert into PNM values ('{$_POST['firstName']}', '{$_POST['lastName']}', '{$_POST['phone']}', '{$_POST['email']}', '{$_POST['grade']}', {$_POST['gpa']})";
+			$query .= " on duplicate key firstName='{$_POST['firstName']}',
 	        mysqli_query($connection, $query);
-			$query = "insert into RUSH values ('{$_S}')"
+			
 	    }
 	    else if(isset($_POST['delete'])){
-	        $query = "delete from PNM where email = '{$_POST['deleteEmail']}'";
+	        $query = "delete from Rush where email = '{$_POST['deleteEmail']}' and eventName = '{$_POST['deleteEvent']}'";
 	        mysqli_query($connection, $query);
+			$query = "select email from Rush where email = '{$_POST['deleteEmail']}'";
+			if(mysqli_query($connection, $query) == 0){
+				$query = "delete from PNM where email = '{$_POST['deleteEmail']}'";
+				mysqli_query($connection, $query);
+			}
 	    }
 	    else if(isset($_POST['update'])){
-	        mysqli_query($connection, $query);
-	    }
-	    else if(isset($_POST['insertRush'])){
-	        $query = "insert into Rush values ('{$_SESSION['fName']}', '{$_POST['emailRush']}', '{$_POST['eventName']}', '{$_POST['date']}')";
-	        mysqli_query($connection, $query);
-	    }
-	    else if(isset($_POST['deleteRush'])){
-	        $query = "delete from Rush where fName = '{$_SESSION['fName']}' and email = '{$_POST['deleteEmailRush']}' and eventName = '{$_POST['deleteEventName']}' and date = '{$_POST['deleteDate']}'";
-	        mysqli_query($connection, $query);
-	    }
-	    else if(isset($_POST['updateRush'])){
 	        mysqli_query($connection, $query);
 	    }
 

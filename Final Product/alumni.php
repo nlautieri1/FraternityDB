@@ -11,7 +11,10 @@
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"><!-- Bootstrap CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/home.css" rel="stylesheet"><?php
+	<link href="css/home.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/js/tom-select.complete.min.js"></script>	
+	<?php
 	    echo "<title>{$_SESSION['fName']} Alumni</title>";
 	    ?>
 	<style>
@@ -80,51 +83,134 @@
 			</div>
 		</div>
 	</div>
-	<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="insert" role="dialog" tabindex="-1">
+
+	<!-- Insert Modal -->
+	<div aria-hidden="true" class="modal fade" id="insert" role="dialog" tabindex="-1">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Insert Member</h5><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+					<h5 class="modal-title">Insert Alumni</h5>
+					<button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
 				</div>
 				<div class="modal-body">
 					<form method="post">
 						<div class="form-group">
 							<div class="row md-form mb-5">
 								<div class="col-md-4">
-									<label class="col-form-label" for="recipient-name">First Name:</label> <input class="form-control" name="firstName" required="" type="text">
+									<label class="col-form-label" for="recipient-name">First Name:</label>
+									<input class="form-control" name="firstName" required type="text">
 								</div>
 								<div class="col-md-4">
-									<label class="col-form-label" for="recipient-name">Last Name:</label> <input class="form-control" name="lastName" required="" type="text">
+									<label class="col-form-label" for="recipient-name">Last Name:</label>
+									<input class="form-control" name="lastName" required type="text">
 								</div>
-							</div><label class="col-form-label" for="recipient-name">Email:</label> <input class="form-control" name="email" required="" type="email">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row md-form mb-5">
+								<div class="col-md-8">
+									<label class="col-form-label" for="recipient-name">Email:</label>
+									<input class="form-control" name="email" required type="email">
+								</div>
+							</div>
 						</div>
 						<div class="modal-footer">
-							<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button> <button class="btn btn-primary" name="insert" type="submit">Insert</button>
+							<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+							<button class="btn btn-primary" name="insert" type="submit">Insert</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="delete" role="dialog" tabindex="-1">
-		<div class="modal-dialog modal-lg" role="document">
+
+	<!-- Delete Modal -->
+	<div aria-hidden="true" class="modal fade" id="delete" role="dialog" tabindex="-1">
+		<div class="modal-dialog modal-sm" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Delete Member</h5><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+					<h5 class="modal-title">Delete Alumni</h5>
+					<button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
 				</div>
 				<div class="modal-body">
-					<form method="post">
+					<form method="post" onSubmit="return confirm('Are you sure you want to delete?')">
 						<div class="form-group">
-							<label class="col-form-label" for="recipient-name">Email:</label> <input class="form-control" name="deleteEmail" required="" type="email">
+						<label class="col-form-label" for="recipient-name">Email:</label>
+									<select name="deleteEmail" id="delete-alumni" placeholder="Select a Email...">
+										<option value="">Select a Email...</option>
+					    					<?php
+										    	$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+										    	$query = "select * from Alumni where fname = '{$_SESSION['fName']}'";
+										    	$r=mysqli_query($connection, $query);
+										        	while ($row=mysqli_fetch_array($r)) {
+										            	echo "<option value='{$row['email']}'> {$row['firstName']} {$row['lastName']} - {$row['email']}</option>";
+										    	}
+										    	mysqli_close($connection);
+											?>
+									</select>
 						</div>
 						<div class="modal-footer">
-							<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button> <button class="btn btn-primary" name="delete" type="submit">Delete</button>
+							<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+							<button class="btn btn-primary" name="delete" type="submit">Delete</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
-	</div><?php
+	</div>
+
+	<!-- Update Modal -->
+	<div aria-hidden="true" class="modal fade" id="update" role="dialog" tabindex="-1">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Update Alumni</h5>
+					<button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body">
+					<form method="post">
+						<div class="form-group">
+							<div class="row md-form mb-5">
+								<div class="col-md-4">
+									<label class="col-form-label" for="recipient-name">First Name:</label>
+									<input class="form-control" name="updateFirstName" required type="text">
+								</div>
+								<div class="col-md-4">
+									<label class="col-form-label" for="recipient-name">Last Name:</label>
+									<input class="form-control" name="updateLastName" required type="text">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row md-form mb-5">
+								<div class="col-md-8">
+									<label class="col-form-label" for="recipient-name">Email:</label>
+									<select name="updateEmail" id="update-alumni" placeholder="Select a Email...">
+										<option value="">Select a Email...</option>
+					    					<?php
+										    	$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+										    	$query = "select * from Alumni where fname = '{$_SESSION['fName']}'";
+										    	$r=mysqli_query($connection, $query);
+										        	while ($row=mysqli_fetch_array($r)) {
+										            	echo "<option value='{$row['email']}'> {$row['firstName']} {$row['lastName']} - {$row['email']}</option>";
+										    	}
+										    	mysqli_close($connection);
+											?>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+							<button class="btn btn-primary" name="update" type="submit">Update</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<?php
 	    $connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
 	    if(isset($_POST['insert'])){
 	        $query = "insert into Alumni values ('{$_POST['firstName']}', '{$_POST['lastName']}', '{$_SESSION['fName']}', '{$_POST['email']}')";
@@ -135,7 +221,7 @@
 	        mysqli_query($connection, $query);
 	    }
 	    else if(isset($_POST['update'])){
-	        $query = "delete from Member where sID = '$deleteSID'";
+	        $query = "update Alumni set firstname = '{$_POST['updateFirstName']}', lastname = '{$_POST['updateLastName']}' where email = '{$_POST['updateEmail']}'";
 	        mysqli_query($connection, $query);
 	    }
 	mysqli_close($connection);  
@@ -179,11 +265,12 @@
 			        $query="Select * From Alumni Where email Like '%$alumni_input%' and fname = '{$_SESSION['fName']}'";
 			}
 
+			$query .= " order by lastName";
 
 			$r=mysqli_query($connection, $query);
 			        while ($row=mysqli_fetch_array($r)) {
 			                echo "<tr>";
-			                echo "<th scope='row'> {$row['firstName']} {$row['lastName']} </th>";
+			                echo "<th scope='row'> {$row['lastName']}, {$row['firstName']} </th>";
 			                echo "<td>".$row['email']."</td>";
 			                echo "</tr>";
 			        }
@@ -191,6 +278,7 @@
 			?>
 		</tbody>
 	</table>
+	<br><br>
 	<div class="FooterContainer">
 		<footer>
 			Location: Guerrieri Student Union 125 | Phone Number: 410-543-6125
@@ -202,6 +290,22 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js">
 	</script> 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js">
+	</script>
+	<script>
+		new TomSelect("#delete-alumni",{
+        		create: false,
+        		sortField: {
+            			field: "text",
+            			direction: "asc"
+        		}
+		});
+		new TomSelect("#update-alumni",{
+        		create: false,
+        		sortField: {
+            			field: "text",
+            			direction: "asc"
+        		}
+		});
 	</script>
 </body>
 </html>

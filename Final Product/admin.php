@@ -46,17 +46,18 @@
 		<img alt="" height="50" src="images/Salisbury_University_logo.png" width="150"> <button aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarText" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
 		<div class="collapse navbar-collapse" id="navbarText">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item">
-					<a class="nav-link" href="admin.php">Home <span class="sr-only">(current)</span></a>
-				</li>
 				<?php
 					if($_SESSION['fName'] != 'admin'){
+						echo "<li class='nav-item'><a class='nav-link' href='admin.php'>Home <span class='sr-only'>(current)</span></a></li>";
 						echo "<li class='nav-item'><a class='nav-link color-me' href='members.php'>Members</a></li>";
 						echo "<li class='nav-item'><a class='nav-link color-me' href='alumni.php'>Alumni</a></li>";
 						echo "<li class='nav-item'><a class='nav-link color-me' href='communityService.php'>Community Service</a></li>";
 						echo "<li class='nav-item'><a class='nav-link color-me' href='attendance.php'>Attendance</a></li>";
 						echo "<li class='nav-item'><a class='nav-link color-me' href='dues.php'>Dues</a></li>";
 						echo "<li class='nav-item'><a class='nav-link color-me' href='pnm.php'>PNMs</a></li>";
+					}
+					else{
+						echo "<br>";
 					}
 				?>
 			</ul>
@@ -100,7 +101,6 @@
 			echo "<th scope='col'>Fraternity</th>";
 			echo "<th scope='col'>Username</th>";
 			echo "<th scope='col'>Email</th>";
-			echo "<th scope='col'>Password</th>";
 			echo "</tr></thead><tbody>";
 
 			$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
@@ -112,10 +112,9 @@
 				echo "<th scope='row'><a href='swap.php?temp={$row['name']}'> {$row['name']}</a></th>";
 				echo "<td>{$row['username']}</td>";
 				echo "<td>{$row['email']}</td>";
-				echo "<td>{$row['password']}</td>";
 				echo "</tr>";
 			}
-			echo "</tbody></table>";
+			echo "</tbody></table><br><br>";
 			mysqli_close($connection);
 		}
 	?>
@@ -127,14 +126,14 @@
                 <div class="modal-header">
                     <h5 class="modal-title" >Add New Fraternity</h5>
                     <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                        <span aria-hidden=w"true">&times;</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <form method="post">
                         <div class="form-group">
                             <label class="col-form-label" for="recipient-name">Fraternity Name:</label>
-                            <input class="form-control" maxlength="40" name="newFrat" required type="text">
+                            <input class="form-control" maxlength="20" name="newFrat" required type="text">
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
@@ -152,9 +151,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Delete Fraternity</h5>
-                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                        <span aria-hidden=w"true">&times;</span>
-                    </button>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
                     <form method="post" onSubmit="return confirm('Are you sure you want to delete?')">
@@ -183,95 +180,136 @@
         </div>
 	</div>
 
-	<!-- Add Account Modal -->
-    <div aria-hidden="true" class="modal fade" id="addAccount" role="dialog" tabindex="-1">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
+<!-- Add Account Modal -->
+<div aria-hidden="true" class="modal fade" id="addAccount" role="dialog" tabindex="-1">
+	<div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" >Add New Account</h5>
-                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-		    <form method="post">
-			<div class="form-group">
-				<label class="col-form-label">Create Account for:</label>
-				<select name="fratAccount" id="delete-frat" placeholder="Select a Fraternity...">
-                              	  <option value="">Select a Fraternity...</option>
-                               	 <?php
-                      	          $connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
-                      	          $query = "select * from Fraternity";
-                       	         $r=mysqli_query($connection, $query);
-                       	         while ($row=mysqli_fetch_array($r)){
-   	               	              echo "<option value='{$row['name']}'>{$row['name']}</option>";
-                                 }
-                       	         mysqli_close($connection);
-                                 ?>
-                        </select>
-			</div>
+		    		<form method="post">
+						<div class="form-group">
+							<label class="col-form-label">Create Account for:</label>
+							<select name="fratAccount" id="add-account" placeholder="Select a Fraternity...">
+                        		<option value="">Select a Fraternity...</option>
+                            	<?php
+                      	        	$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+                      	          	$query = "select name from Fraternity left join Account on fName = name where fName is NULL";
+                       	         	$r=mysqli_query($connection, $query);
+                       	         	while ($row=mysqli_fetch_array($r)){
+   	               	              		echo "<option value='{$row['name']}'>{$row['name']}</option>";
+                                 	}
+                       	         	mysqli_close($connection);
+                            	?>
+                        	</select>
+						</div>
                         <div class="form-group">
                             <label class="col-form-label" for="recipient-name">Username:</label>
-			    <input class="form-control" maxlength="40" name="username" required type="text">
-			</div>
-			<div class="form-group">
+			    			<input class="form-control" maxlength="20" name="username" required type="text">
+						</div>
+						<div class="form-group">
                             <label class="col-form-label" for="recipient-name">Password:</label>
-                            <input class="form-control" maxlength="40" name="password" required type="text">
-			</div>
-			 <div class="form-group">
+                            <input class="form-control" maxlength="20" name="password" required type="text">
+						</div>
+			 			<div class="form-group">
                             <label class="col-form-label" for="recipient-name">Email:</label>
-                            <input class="form-control" maxlength="40" name="email" required type="text">
+                            <input class="form-control" maxlength="255" name="email" required type="email">
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
-                            <button class="btn btn-primary" name="addAccount" type="submit">Insert</button>
+                            <button class="btn btn-primary" name="addAccount" type="submit">Add Account</button>
                         </div>
                    </form>
-                                </div>
+                </div>
             </div>
         </div>
-     </div>
-   </div>
+    </div>
+</div>
 
-   <!-- Delete Account Modal -->
-    <div aria-hidden="true" class="modal fade" id="deleteAccount" role="dialog" tabindex="-1">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
+<!-- Delete Account Modal -->
+<div aria-hidden="true" class="modal fade" id="deleteAccount" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Account</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" onSubmit="return confirm('Are you sure you want to delete?')">
+                    <div class="form-group">
+                        <label class="col-form-label" for="recipient-name">Fraternity Name:</label>
+                        <select name="deleteFratAccount" id="delete-account" placeholder="Select a Fraternity...">
+                            <option value="">Select a Fraternity...</option>
+                                <?php
+                                    $connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+                                    $query = "select * from Account";
+                                    $r=mysqli_query($connection, $query);
+                                    while ($row=mysqli_fetch_array($r)){
+                                        echo "<option value='{$row['fname']}'>{$row['fname']}</option>";
+                                    }
+                                    mysqli_close($connection);
+								?>
+                        </select>
+                    </div>
+                	<div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                        <button class="btn btn-primary" name="deleteAccount" type="submit">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update Account Modal -->
+<div aria-hidden="true" class="modal fade" id="updateAccount" role="dialog" tabindex="-1">
+	<div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Delete Fraternity Account</h5>
-                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                        <span aria-hidden=w"true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" >Update Account</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" onSubmit="return confirm('Are you sure you want to delete?')">
+		    		<form method="post">
+						<div class="form-group">
+							<label class="col-form-label">Fraternity Name:</label>
+							<select name="updateFratName" id="update-account" placeholder="Select a Fraternity...">
+                        		<option value="">Select a Fraternity...</option>
+                            	<?php
+                      	        	$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+                      	          	$query = "select * from Account";
+                       	         	$r=mysqli_query($connection, $query);
+                       	         	while ($row=mysqli_fetch_array($r)){
+   	               	              		echo "<option value='{$row['fname']}'>{$row['fname']}</option>";
+                                 	}
+                       	         	mysqli_close($connection);
+                            	?>
+                        	</select>
+						</div>
                         <div class="form-group">
-                            <label class="col-form-label" for="recipient-name">Fraternity Account:</label>
-                            <select name="deleteFratAccount" id="delete-frat" placeholder="Select a Fraternity...">
-                                <option value="">Select a Fraternity...</option>
-                                                                <?php
-                                                                        $connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
-                                                                        $query = "select * from Account";
-                                                                        $r=mysqli_query($connection, $query);
-                                                                        while ($row=mysqli_fetch_array($r)){
-                                                                                echo "<option value='{$row['fname']}'>{$row['fname']}</option>";
-                                                                        }
-                                                                        mysqli_close($connection);
-								?>
-			
-                        </select>
+                            <label class="col-form-label" for="recipient-name">Username:</label>
+			    			<input class="form-control" maxlength="20" name="updateUsername" required type="text">
+						</div>
+						<div class="form-group">
+                            <label class="col-form-label" for="recipient-name">Password:</label>
+                            <input class="form-control" maxlength="20" name="updatePassword" required type="text">
+						</div>
+			 			<div class="form-group">
+                            <label class="col-form-label" for="recipient-name">Email:</label>
+                            <input class="form-control" maxlength="255" name="updateEmail" required type="email">
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
-                            <button class="btn btn-primary" name="deleteAccount" type="submit">Delete</button>
+                            <button class="btn btn-primary" name="updateAccount" type="submit">Update</button>
                         </div>
-                    </form>
+                   </form>
                 </div>
             </div>
         </div>
-        </div>
-
-	
+    </div>
+</div>
 
 	<?php
 		$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
@@ -285,21 +323,18 @@
 			mysqli_query($connection, $query);
 		}
 		else if(isset($_POST['addAccount'])){
-			$password = $_POST['password'];
-			$username = $_POST['username'];
-			/* $hashed_password = password_hash($password, PASSWORD_BCRYPT); */
-			$email = $_POST['email'];
-			$fratAccount = $_POST['fratAccount'];
-			$query = "insert into Account values('$fratAccount', '$username', '$password', '$email');";
+			$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+			$query = "insert into Account values ('{$_POST['fratAccount']}', '{$_POST['username']}', '$password', '{$_POST['email']}')";
 			mysqli_query($connection, $query);
 		}
 		else if(isset($_POST['deleteAccount'])){
-			$deleteAccount = $_POST['deleteFratAccount'];
-                        $query = "delete from Account where fname = '$deleteAccount';";
-                        mysqli_query($connection, $query);
+			$query = "delete from Account where fName = '{$_POST['deleteFratAccount']}'";
+			mysqli_query($connection, $query);
 		}
-		else if(isset($_POST['updateFrat'])){
-		 
+		else if(isset($_POST['updateAccount'])){
+			$password = password_hash($_POST['updatePassword'], PASSWORD_DEFAULT);
+			$query = "update Account set username = '{$_POST['updateUsername']}', password = '$password', email = '{$_POST['updateEmail']}' where fName = '{$_POST['updateFratName']}'";
+			mysqli_query($connection, $query);
 		}
 		mysqli_close($connection);
     ?>
@@ -326,13 +361,27 @@
         		}
 		});	
 
-		new TomSelect("#update-frat",{
+		new TomSelect("#add-account",{
         		create: false,
         		sortField: {
             			field: "text",
             			direction: "asc"
         		}
-		});	
+		});
+		new TomSelect("#delete-account",{
+        		create: false,
+        		sortField: {
+            			field: "text",
+            			direction: "asc"
+        		}
+		});
+		new TomSelect("#update-account",{
+        		create: false,
+        		sortField: {
+            			field: "text",
+            			direction: "asc"
+        		}
+		});
     </script>
 </body>
 </html>

@@ -12,6 +12,10 @@
 	<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"><!-- Bootstrap CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/home.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/js/tom-select.complete.min.js"></script>	
+
+
 	<title>Salisbury Fraternity Homepage</title>
 	<style>
 	   	.navbar-red{
@@ -72,112 +76,106 @@
 		<div class="row">
 			<div class="col text-center">
 				<?php
-				echo "<h1> {$_SESSION['fName']} Dues</h1>";
+					echo "<h1> {$_SESSION['fName']} Dues</h1>";
 				?>
-				<button class="btn btn-primary" data-target="#exampleModal" data-toggle="modal" data-whatever="@mdo" type="button">Insert</button>
-				<button class="btn btn-primary" data-target="#exampleModal" data-toggle="modal" data-whatever="@fat" type="button">Delete</button>
-				<button class="btn btn-primary" data-target="#exampleModal" data-toggle="modal" data-whatever="@getbootstrap" type="button">Update</button>
+				<button class="btn btn-primary" data-target="#insert" data-toggle="modal" data-whatever="@mdo" type="button">Insert</button>
+				<button class="btn btn-primary" data-target="#delete" data-toggle="modal" data-whatever="@fat" type="button">Delete</button>
+				<button class="btn btn-primary" data-target="#update" data-toggle="modal" data-whatever="@getbootstrap" type="button">Update</button>
 			</div>
 		</div>
 	</div>
-	
-			<!-- Insert Fraternity Modal -->
-    <div aria-hidden="true" class="modal fade" id="insertFrat" role="dialog" tabindex="-1">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" >Add New Fraternity</h5>
-                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                        <span aria-hidden=w"true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="post">
-                        <div class="form-group">
-                            <label class="col-form-label" for="recipient-name">Fraternity Name:</label>
-                            <input class="form-control" maxlength="40" name="newFrat" required type="text">
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
-                            <button class="btn btn-primary" name="insertFrat" type="submit">Insert</button>
-                        </div>
-                   </form>
-				</div>
-            </div>
-        </div>
+<br>
+<div aria-hidden="true" class="modal fade" id="insert" role="dialog" tabindex="-1">
+	<div class="modal-dialog modal-lg" role="document">
+	    <div class="modal-content">
+			<div class="modal-header">
+		    	<h5 class="modal-title" >Add Dues</h5>
+		    	<button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<div class="modal-body">
+		    	<form method="post">
+					<div class="form-group">
+						<div class="row md-form mb-5">
+							<div class="col-md-4">
+								<label class="col-form-label" for="recipient-name">Student ID:</label>
+								<select name="sID" id="add-dues" placeholder="Select a SID...">
+									<option value="">Select a SID...</option>
+					    				<?php
+										    $connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+										    $query = "select sID, firstName, lastName from Member where fName = '{$_SESSION['fName']}'";
+										    $r=mysqli_query($connection, $query);
+										    while ($row=mysqli_fetch_array($r)) {
+										        echo "<option value='{$row['sID']}'>{$row['sID']} - {$row['firstName']} {$row['lastName']}</option>";
+										    }
+										    mysqli_close($connection);
+										?>
+								</select>
+							</div>
+							<div class="col-md-4">
+					    		<label class="col-form-label" for="recipient-name">Term:</label><br>
+					    			<select name="term">
+										<option value="Fall">Fall</option>
+										<option value="Spring">Spring</option>
+										<option value="Winter">Winter</option>
+										<option value="Summer">Summer</option>
+					    			</select>
+							</div>
+							<div class="col-md-4">
+					    		<label class="col-form-label" for="recipient-name">Year:</label>
+					    		<input class="form-control" name="year" required type="text">		
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="row md-form mb-5">
+							<div class="col-md-4">
+					    		<label class="col-form-label" for="recipient-name">Current Paid:</label>
+					    		<input class="form-control" name="paid" required type="text">
+							</div>
+							<div class="col-md-4">
+					    		<label class="col-form-label" for="recipient-name">Current Dues:</label>
+					    		<input class="form-control" name="currentDues" required type="text">		
+							</div>
+						</div>
+					</div>		
+					<div class="modal-footer">
+			    		<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+			    		<button class="btn btn-primary" name="insert" type="submit">Insert</button>
+					</div>
+		   		</form>
+			</div>
+		</div>
 	</div>
+</div>
 
-    <!-- Delete Fraternity Modal -->
-    <div aria-hidden="true" class="modal fade" id="deleteFrat" role="dialog" tabindex="-1">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Delete Fraternity</h5>
-                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                        <span aria-hidden=w"true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" onSubmit="return confirm('Are you sure you want to delete?')">
-                        <div class="form-group">
-                            <label class="col-form-label" for="recipient-name">Fraternity Name:</label>
-                            <select name="deleteFname" id="delete-frat" placeholder="Select a Fraternity...">
-                                <option value="">Select a Fraternity...</option>
-								<?php
-									$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
-									$query = "select * from Fraternity";
-									$r=mysqli_query($connection, $query);
-									while ($row=mysqli_fetch_array($r)){
-										echo "<option value='{$row['name']}'>{$row['name']}</option>";
-									}
-									mysqli_close($connection);
-								?>
-							</select>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
-                            <button class="btn btn-primary" name="deleteFrat" type="submit">Delete</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-	</div>
-	
-	<?php
-	    $connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
-	    if(isset($_POST['insert'])){
-	        $query = "insert into Member values ('{$_SESSION['fName']}', '{$_POST['firstName']}', '{$_POST['lastName']}', '{$_POST['position']}', '{$_POST['grade']}', {$_POST['gpa']}, '{$_POST['phone']}', '{$_POST['email']}', '{$_POST['major']}', '{$_POST['sID']}')";
-	        mysqli_query($connection, $query);
-	    }
-	    else if(isset($_POST['delete'])){
-	        $query = "delete from Dues where sID = '{$_POST['deleteSID']}'";
-	        mysqli_query($connection, $query);
-		$query = "delete from Attendance where sID = '{$_POST['deleteSID']}'";
-	        mysqli_query($connection, $query);
-		$query = "delete from Member where sID = '{$_POST['deleteSID']}'";
-	        mysqli_query($connection, $query);
-	    }
-	    else if(isset($_POST['update'])){
-	        $query = "delete from Member where sID = '$deleteSID'";
-	        mysqli_query($connection, $query);
-	    }
-	    else if(isset($_POST['graduate'])){
-		$query = "delete from Dues where sID = '{$_POST['graduateSID']}'";
-	        mysqli_query($connection, $query);
-		$query = "delete from Attendance where sID = '{$_POST['graduateSID']}'";
-	        mysqli_query($connection, $query);
-		$query = "select * from Member where sID = '{$_POST['graduateSID']}'";
-		$t = mysqli_query($connection, $query);
-		$temp = mysqli_fetch_array($t);
-		$query = "insert into Alumni values ('{$temp['firstName']}', '{$temp['lastName']}', '{$_SESSION['fName']}', '{$temp['email']}')";
-		mysqli_query($connection, $query);
-		$query = "delete from Member where sID = '{$_POST['graduateSID']}'";
-	        mysqli_query($connection, $query);
-	    }
+			<?php
+				$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+					if(isset($_POST['insert'])){
+						if (($_POST['paid']) == ($_POST['currentDues']))
+							$paidOff=1;
+						else
+							$paidOff=0;
+					$query = "insert into Dues values ('{$_POST['sID']}', '{$_POST['term']}', {$_POST['year']}, 
+						{$_POST['paid']}, {$_POST['currentDues']}, $paidOff)";
+					$result = mysqli_query($connection, $query);
+					}
+			/*
+				else if(isset($_POST['delete'])){
+					$query = "delete from Dues where sID = '{$_POST['deleteSID']}'";
+					mysqli_query($connection, $query);
+					$query = "delete from Attendance where sID = '{$_POST['deleteSID']}'";
+					mysqli_query($connection, $query);
+					$query = "delete from Member where sID = '{$_POST['deleteSID']}'";
+					mysqli_query($connection, $query);
+				}
+				else if(isset($_POST['update'])){
+					$query = "delete from Member where sID = '$deleteSID'";
+					mysqli_query($connection, $query);
+				}
+			 */	
+			?>
+			
 
-	    mysqli_close($connection);
-	?>
 	<form method="post">
 		Filter by: <select name="attribute">
 			<option value="sID">
@@ -195,14 +193,14 @@
 			<option value="year">
 				Year
 			</option>
-			<option value="owed">
-				Total Owed
+			<option value="paid">
+				Current Paid
 			</option>
 			<option value="currentDues">
 				Current Dues
 			</option>
 			<option value="paidOff">
-				Dues Paid (Y/N)
+				Paid Off (Y/N)
 			</option>
 		</select> <input id="search" name="dues_input" placeholder="Type here" type="text"> <input id="submit" type="submit" value="Search">
 	</form><br>
@@ -213,59 +211,63 @@
 				<th scope="col">Name</th>
 				<th scope="col">Term</th>
 				<th scope="col">Year</th>
-				<th scope="col">Total Owed</th>
+				<th scope="col">Current Paid</th>
 				<th scope="col">Current Dues</th>
-				<th scope="col">Dues Paid (Y/N)</th>
+				<th scope="col">Paid Off (Y/N)</th>
 			</tr>
 		</thead>
 		<tbody>
-			<?php
-			$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
 
+<?php
+	$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+
+	$query = "select * from Dues natural join Member where fName = '{$_SESSION['fName']}'";
+	/*
 			$dues_input=$_POST['dues_input'];
 			$attribute=$_POST['attribute'];
-			        $query="Select sID, firstName, lastName, term, year, currentDues, owed, paidOff From Dues natural join Member where fName = '{$_SESSION['fName']}'";
+			        $query="Select sID, firstName, lastName, term, year, paid, currentDues, paidOff From Dues natural join Member where fName = '{$_SESSION['fName']}'";
 			if ($attribute == 'sID') {
 			        $displayAtt='sID';
-			        $query="Select sID, firstName, lastName, term, year, currentDues, owed, paidOff From Dues natural join Member where sID Like '%$dues_input%' and fName = '{$_SESSION['fName']}'";
+			        $query="Select sID, firstName, lastName, term, year, paid, currentDues  paidOff From Dues natural join Member where sID Like '%$dues_input%' and fName = '{$_SESSION['fName']}'";
 			} else if ($attribute == 'firstName') {
 			        $displayAtt='first name';
-			        $query="Select sID, firstName, lastName, term, year, currentDues, owed, paidOff From Dues natural join Member where firstName Like '%$dues_input%' and fName = '{$_SESSION['fName']}'";
+			        $query="Select sID, firstName, lastName, term, year, paid, currentDues, paidOff From Dues natural join Member where firstName Like '%$dues_input%' and fName = '{$_SESSION['fName']}'";
 			} else if ($attribute == 'lastName') {
 			        $displayAtt='last name';
-			        $query="Select sID, firstName, lastName, term, year, currentDues, owed, paidOff From Dues natural join Member where lastName Like '%$dues_input%' and fName = '{$_SESSION['fName']}'";
+			        $query="Select sID, firstName, lastName, term, year, paid, currentDues, paidOff From Dues natural join Member where lastName Like '%$dues_input%' and fName = '{$_SESSION['fName']}'";
 			} else if ($attribute == 'term') {
 			        $displayAtt='term';
-			        $query="Select sID, firstName, lastName, term, year, currentDues, owed, paidOff From Dues natural join Member where term Like '%$dues_input%' and fName = '{$_SESSION['fName']}'";
+			        $query="Select sID, firstName, lastName, term, year, paid, currentDues, paidOff From Dues natural join Member where term Like '%$dues_input%' and fName = '{$_SESSION['fName']}'";
 			} else if ($attribute == 'year') {
 			        $displayAtt='year';
-			        $query="Select sID, firstName, lastName, term, year, currentDues, owed, paidOff From Dues natural join Member where year Like '%$dues_input%' and fName = '{$_SESSION['fName']}'";
-			} else if ($attribute == 'owed') {
-			        $displayAtt='total owed';
-			        $query="Select sID, firstName, lastName, term, year, currentDues, owed, paidOff From Dues natural join Member where owed >= '$dues_input' and fName = '{$_SESSION['fName']}'";
+			        $query="Select sID, firstName, lastName, term, year, paid, currentDues, paidOff From Dues natural join Member where year Like '%$dues_input%' and fName = '{$_SESSION['fName']}'";
+			} else if ($attribute == 'paid') {
+			        $displayAtt='paid';
+			        $query="Select sID, firstName, lastName, term, year, paid, currentDues, paidOff From Dues natural join Member where paid >= '$dues_input' and fName = '{$_SESSION['fName']}'";
 			} else if ($attribute == 'currentDues') {
 			        $displayAtt='current dues';
-			        $query="Select sID, firstName, lastName, term, year, currentDues, owed, paidOff From Dues natural join Member where currentDues Like '%$dues_input%' and fName = '{$_SESSION['fName']}'";
+			        $query="Select sID, firstName, lastName, term, year, paid, currentDues, paidOff From Dues natural join Member where currentDues Like '%$dues_input%' and fName = '{$_SESSION['fName']}'";
 			} else if ($attribute == 'paidOff') {
 			        $displayAtt='dues paid';
 			        $new_input=1;
 			        if (($dues_input == 'Yes') || ($dues_input == 'yes') || ($dues_input == 'y') || ($dues_input == 'Y')) {
-			                $query="Select sID, firstName, lastName, term, year, currentDues, owed, paidOff From Dues natural join Member where paidOff = '$new_input' and fName = '{$_SESSION['fName']}'";
+			                $query="Select sID, firstName, lastName, term, year, paid, currentDues, paidOff From Dues natural join Member where paidOff = '$new_input' and fName = '{$_SESSION['fName']}'";
 			        } else if (($dues_input == 'No') || ($dues_input == 'no') || ($dues_input == 'n') || ($dues_input == 'N')) {
-			                $query="Select sID, firstName, lastName, term, year, currentDues, owed, paidOff From Dues natural join Member where paidOff = 0 and fName = '{$_SESSION['fName']}'";
+			                $query="Select sID, firstName, lastName, term, year, paid, currentDues, paidOff From Dues natural join Member where paidOff = 0 and fName = '{$_SESSION['fName']}'";
 			        } else {
 			                $query="";
 			        }
 			}
-
+ */
+			
 			$r=mysqli_query($connection, $query);
 			        while ($row=mysqli_fetch_array($r)) {
 			                echo "<tr>";
 			                echo "<th scope='row'>".$row['sID']."</th>";
-			                echo "<td> {$row['firstName']} {$row['lastName']} </td>";
+			                echo "<td> {$row['lastName']}, {$row['firstName']} </td>";
 			                echo "<td>".$row['term']."</td>";
 			                echo "<td>".$row['year']."</td>";
-			                echo "<td>".$row['owed']."</td>";
+			                echo "<td>".$row['paid']."</td>";
 			                echo "<td>".$row['currentDues']."</td>";
 			        if($row['paidOff'] == 1){
 			            echo "<td>Yes</td>";
@@ -291,6 +293,15 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js">
 	</script> 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js">
+	</script>
+	<script>
+		new TomSelect("#add-dues",{
+        		create: false,
+        		sortField: {
+            			field: "text",
+            			direction: "asc"
+        		}
+		});	
 	</script>
 </body>
 </html>
