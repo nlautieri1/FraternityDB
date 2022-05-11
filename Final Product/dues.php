@@ -77,6 +77,40 @@
 			</div>
 		</div>
 	</div>
+	<?php
+	    $connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+	    if(isset($_POST['insert'])){
+	        $query = "insert into Member values ('{$_SESSION['fName']}', '{$_POST['firstName']}', '{$_POST['lastName']}', '{$_POST['position']}', '{$_POST['grade']}', {$_POST['gpa']}, '{$_POST['phone']}', '{$_POST['email']}', '{$_POST['major']}', '{$_POST['sID']}')";
+	        mysqli_query($connection, $query);
+	    }
+	    else if(isset($_POST['delete'])){
+	        $query = "delete from Dues where sID = '{$_POST['deleteSID']}'";
+	        mysqli_query($connection, $query);
+		$query = "delete from Attendance where sID = '{$_POST['deleteSID']}'";
+	        mysqli_query($connection, $query);
+		$query = "delete from Member where sID = '{$_POST['deleteSID']}'";
+	        mysqli_query($connection, $query);
+	    }
+	    else if(isset($_POST['update'])){
+	        $query = "delete from Member where sID = '$deleteSID'";
+	        mysqli_query($connection, $query);
+	    }
+	    else if(isset($_POST['graduate'])){
+		$query = "delete from Dues where sID = '{$_POST['graduateSID']}'";
+	        mysqli_query($connection, $query);
+		$query = "delete from Attendance where sID = '{$_POST['graduateSID']}'";
+	        mysqli_query($connection, $query);
+		$query = "select * from Member where sID = '{$_POST['graduateSID']}'";
+		$t = mysqli_query($connection, $query);
+		$temp = mysqli_fetch_array($t);
+		$query = "insert into Alumni values ('{$temp['firstName']}', '{$temp['lastName']}', '{$_SESSION['fName']}', '{$temp['email']}')";
+		mysqli_query($connection, $query);
+		$query = "delete from Member where sID = '{$_POST['graduateSID']}'";
+	        mysqli_query($connection, $query);
+	    }
+
+	    mysqli_close($connection);
+	?>
 	<form method="post">
 		Filter by: <select name="attribute">
 			<option value="sID">
