@@ -77,6 +77,70 @@
 			</div>
 		</div>
 	</div>
+	
+			<!-- Insert Fraternity Modal -->
+    <div aria-hidden="true" class="modal fade" id="insertFrat" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" >Add New Fraternity</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden=w"true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="form-group">
+                            <label class="col-form-label" for="recipient-name">Fraternity Name:</label>
+                            <input class="form-control" maxlength="40" name="newFrat" required type="text">
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                            <button class="btn btn-primary" name="insertFrat" type="submit">Insert</button>
+                        </div>
+                   </form>
+				</div>
+            </div>
+        </div>
+	</div>
+
+    <!-- Delete Fraternity Modal -->
+    <div aria-hidden="true" class="modal fade" id="deleteFrat" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Fraternity</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden=w"true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" onSubmit="return confirm('Are you sure you want to delete?')">
+                        <div class="form-group">
+                            <label class="col-form-label" for="recipient-name">Fraternity Name:</label>
+                            <select name="deleteFname" id="delete-frat" placeholder="Select a Fraternity...">
+                                <option value="">Select a Fraternity...</option>
+								<?php
+									$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
+									$query = "select * from Fraternity";
+									$r=mysqli_query($connection, $query);
+									while ($row=mysqli_fetch_array($r)){
+										echo "<option value='{$row['name']}'>{$row['name']}</option>";
+									}
+									mysqli_close($connection);
+								?>
+							</select>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                            <button class="btn btn-primary" name="deleteFrat" type="submit">Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+	</div>
+	
 	<?php
 	    $connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
 	    if(isset($_POST['insert'])){
@@ -213,69 +277,6 @@
 			?>
 		</tbody>
 	</table>
-	
-		<!-- Insert Fraternity Modal -->
-    <div aria-hidden="true" class="modal fade" id="insertFrat" role="dialog" tabindex="-1">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" >Add New Fraternity</h5>
-                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                        <span aria-hidden=w"true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="post">
-                        <div class="form-group">
-                            <label class="col-form-label" for="recipient-name">Fraternity Name:</label>
-                            <input class="form-control" maxlength="40" name="newFrat" required type="text">
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
-                            <button class="btn btn-primary" name="insertFrat" type="submit">Insert</button>
-                        </div>
-                   </form>
-				</div>
-            </div>
-        </div>
-	</div>
-
-    <!-- Delete Fraternity Modal -->
-    <div aria-hidden="true" class="modal fade" id="deleteFrat" role="dialog" tabindex="-1">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Delete Fraternity</h5>
-                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                        <span aria-hidden=w"true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" onSubmit="return confirm('Are you sure you want to delete?')">
-                        <div class="form-group">
-                            <label class="col-form-label" for="recipient-name">Fraternity Name:</label>
-                            <select name="deleteFname" id="delete-frat" placeholder="Select a Fraternity...">
-                                <option value="">Select a Fraternity...</option>
-								<?php
-									$connection=mysqli_connect("localhost", "nlautieri1", "3Cavalier3gulls", "FraternityDB") or die("Error connecting to database: ".mysqli_error());
-									$query = "select * from Fraternity";
-									$r=mysqli_query($connection, $query);
-									while ($row=mysqli_fetch_array($r)){
-										echo "<option value='{$row['name']}'>{$row['name']}</option>";
-									}
-									mysqli_close($connection);
-								?>
-							</select>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
-                            <button class="btn btn-primary" name="deleteFrat" type="submit">Delete</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-	</div>
 	<div class="FooterContainer">
 		<footer>
 			Location: Guerrieri Student Union 125 | Phone Number: 410-543-6125
